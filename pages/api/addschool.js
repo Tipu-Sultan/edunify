@@ -35,7 +35,6 @@ export default async function handler(req, res) {
           state: req.body.state,
           contact: req.body.contact,
           email: req.body.email,
-          image: req.file.filename,
         });
 
         // Save the school to the database
@@ -44,7 +43,7 @@ export default async function handler(req, res) {
         // Send response
         res.status(201).json({
           success: true,
-          data: { id: savedSchool._id, ...req.body, picture: req.file.filename, message: 'School added successfully' },
+          data: { id: savedSchool._id, ...req.body, message: 'School added successfully' },
         });
     } catch (error) {
       console.error('Error adding school:', error);
