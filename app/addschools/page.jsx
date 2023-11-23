@@ -14,6 +14,7 @@ const page = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
+    formData.append("picture", data.picture[0]);
     formData.append("name", data.name);
     formData.append("address", data.address);
     formData.append("city", data.city);
@@ -23,7 +24,7 @@ const page = () => {
     setLoading(true);
   
     try {
-      const response = await axios.post("https://mancode.onrender.com/api/addschool", formData);
+      const response = await axios.post("https://edunify.vercel.app/api/addschool", formData);
   
       if (response.status === 200) {
         const result = response.data;
@@ -206,7 +207,34 @@ const page = () => {
           </div>
 
           {/* Image Upload (File Input) */}
-          
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Add School Image
+            </label>
+            <input
+              type="file"
+              {...register("picture", {
+                required: "Image is required",
+                validate: {
+                  validFileType: (value) => {
+                    const allowedFileTypes = [".jpg", ".jpeg", ".png"];
+                    const fileExtension = value[0].name
+                      .split(".")
+                      .pop()
+                      .toLowerCase();
+                    return allowedFileTypes.includes(`.${fileExtension}`);
+                  },
+                },
+              })}
+              accept=".jpg, .jpeg, .png"
+            />
+            {errors.picture && (
+              <p className="text-red-500 mt-1">{errors.picture.message}</p>
+            )}
+          </div>
           {/* Submit Button */}
           <div className="text-center">
             <button
