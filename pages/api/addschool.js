@@ -1,30 +1,37 @@
 // pages/api/addschool.js
 import { connectDB } from '../../utils/db';
 import School from '../../models/school';
-// import multer from 'multer';
+import multer from 'multer';
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "public/images"); // Uploads folder where files will be stored
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + "-" + file.originalname); // Unique filename
-//   },
-// });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images"); // Uploads folder where files will be stored
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname); // Unique filename
+  },
+});
 
-// const upload = multer({ storage });
+const upload = multer({ storage });
 
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       // Connect to the database
       await connectDB();
+
+      // Handle file upload
+      upload.single('picture')(req, res, async (err) => {
+        if (err) {
+          console.error('Error uploading file:', err);
+          return res.status(500).json({ success: false, error: 'Internal Server Error' });
+        }
 
         // Create a new school instance
         const school = new School({
@@ -34,6 +41,7 @@ export default async function handler(req, res) {
           state: req.body.state,
           contact: req.body.contact,
           email: req.body.email,
+          image: req.file.filename,
         });
 
         // Save the school to the database
@@ -42,9 +50,9 @@ export default async function handler(req, res) {
         // Send response
         res.status(201).json({
           success: true,
-          data: { id: savedSchool._id, ...req.body, message: 'School added successfully' },
+          data: { id: savedSchool._id, ...req.body, picture: req.file.filename, message: 'School added successfully' },
         });
-
+      });
     } catch (error) {
       console.error('Error adding school:', error);
       res.status(500).json({ success: false, error: 'Internal Server Error' });
