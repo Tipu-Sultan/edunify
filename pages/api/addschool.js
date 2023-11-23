@@ -19,10 +19,9 @@ export const config = {
     bodyParser: false,
   },
 };
-let check  = ''
+
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    check = req.body.name
     try {
       // Connect to the database
       await connectDB();
@@ -56,7 +55,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error('Error adding school:', error);
-      res.status(500).json({ success: false, error: 'Internal Server Error',value:`${check}` });
+      res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
