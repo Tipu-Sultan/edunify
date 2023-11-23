@@ -22,7 +22,7 @@ const page = () => {
     formData.append("email", data.email);
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.API_HOST}/api/addschool`, {
+      const response = await fetch("/api/addschool", {
         method: "POST",
         body: formData,
       });
