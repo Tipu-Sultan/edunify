@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import axios from 'axios';
 
 const page = () => {
   const [loading, setLoading] = useState(false);
@@ -21,14 +22,12 @@ const page = () => {
     formData.append("contact", data.contact);
     formData.append("email", data.email);
     setLoading(true);
+  
     try {
-      const response = await fetch("https://edunify.vercel.app/api/addschool", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        const result = await response.json();
+      const response = await axios.post("https://edunify.vercel.app/api/addschool", formData);
+  
+      if (response.status === 200) {
+        const result = response.data;
         console.log("Data submitted successfully:", result.data);
         toast.success(result.data.message);
         setLoading(false);
@@ -39,9 +38,11 @@ const page = () => {
       }
     } catch (error) {
       console.error("Error submitting data:", error);
+      toast.error("Error submitting data");
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="min-h-md flex items-center justify-center bg-gray-50">
