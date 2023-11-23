@@ -10,7 +10,17 @@ const page = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: '',
+      address: '',
+      city: '',
+      state: '',
+      contact: '',
+      email: '',
+      picture: '',
+    }
+  });
 
   const onSubmit = async (data) => {
     const formData = new FormData();
