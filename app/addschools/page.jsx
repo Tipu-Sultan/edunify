@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from 'axios';
@@ -184,3 +185,4 @@ const Page = () => {
 };
 
 export default Page;
+
