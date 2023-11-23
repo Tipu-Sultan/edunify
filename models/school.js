@@ -29,6 +29,7 @@ if (!mongoose.models.School) {
           image: {
             type: String, 
             required: true,
+            default:'a',
           },
     });
   
