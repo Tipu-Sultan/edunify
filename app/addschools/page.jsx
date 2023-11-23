@@ -34,7 +34,7 @@ const page = () => {
     setLoading(true);
   
     try {
-      const response = await axios.post("https://edunify.vercel.app/api/addschool", formData);
+      const response = await axios.post("/api/addschool", formData);
   
       if (response.status === 200) {
         const result = response.data;
