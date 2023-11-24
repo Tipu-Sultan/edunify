@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       upload.single('file')(req, res, async (err) => {
         if (err) {
           console.error('Error uploading file:', err);
-          return res.status(500).json({ success: false, error: 'Internal Server Error' });
+          return res.status(500).json({ success: false, error: 'Internal Server Error file',Name:req.body.name });
         }
         // Create a new school instance
         const school = new School({
@@ -54,7 +54,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error('Error adding school:', error);
-      res.status(500).json({ success: false, error: 'Internal Server Error' });
+      res.status(500).json({ success: false, error: 'Internal Server Error all' });
     }
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
