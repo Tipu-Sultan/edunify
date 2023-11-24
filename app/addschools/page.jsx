@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 
-const AddSchoolForm = () => {
+const page = () => {
   const [formData, setFormData] = useState({
     name: '',
     address: '',
