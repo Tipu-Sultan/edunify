@@ -6,7 +6,7 @@ import multer from 'multer';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = '/public/images'; // Save files to /tmp/images
+    const uploadPath = '/tmp/images'; // Save files to /tmp/images
 
     // Create the directory if it doesn't exist
     if (!fs.existsSync(uploadPath)) {
