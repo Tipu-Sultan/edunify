@@ -2,7 +2,7 @@
 import { connectDB } from '../../utils/db';
 import {School} from '../../models/school'; // Assuming School is the default export
 import multer from 'multer';
-import nc from 'next-connect';
+import {createRouter} from 'next-connect';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -15,11 +15,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const handler = nc();
+const router = createRouter();
 
-handler.use(upload.single('file'));
+router.use(upload.single('file'));
 
-handler.post(async (req, res) => {
+router.post(async (req, res) => {
   try {
     // Connect to the database
     await connectDB();
@@ -54,7 +54,7 @@ handler.post(async (req, res) => {
   }
 });
 
-export default handler;
+export default router.handler();
 
 
 
