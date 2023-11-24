@@ -6,6 +6,18 @@ if (!mongoose.models.School) {
             type: String,
             required: true,
           },
+          address: {
+            type: String,
+            required: true,
+          },
+          city: {
+            type: String,
+            required: true,
+          },
+          state: {
+            type: String,
+            required: true,
+          },
           contact: {
             type: String,
             required: true,
@@ -14,7 +26,11 @@ if (!mongoose.models.School) {
             type: String,
             required: true,
           },
-
+          image: {
+            type: String, 
+            required: true,
+            default:'a',
+          },
     });
   
     mongoose.model('School', schoolSchema);
