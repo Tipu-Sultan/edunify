@@ -39,24 +39,24 @@ const page = () => {
     setLoading(true);
   
     try {
-      const response = await axios.post("/api/addschool", formData,{
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const apiUrl = '/api/addschool';
+    
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Data submitted successfully:', data);
+        // You can perform additional actions after successful submission
+      })
+      .catch(error => {
+        console.error('Error submitting data:', error);
+        // Handle errors accordingly
       });
-  
-      if (response.status === 200) {
-        const result = response.data;
-        console.log("Data submitted successfully:", result.data);
-        toast.success(result.data.message);
-        setLoading(false);
-        setFile(null);
-      } else {
-        console.error("Failed to submit data:", response.statusText);
-        toast.error("Failed to submit data");
-        setLoading(false);
-        setFile(null);
-      }
     } catch (error) {
       console.error("Error submitting data:", error);
       toast.error("Error submitting data");
