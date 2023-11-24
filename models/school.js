@@ -6,10 +6,15 @@ if (!mongoose.models.School) {
             type: String,
             required: true,
           },
-          address: {
+          contact: {
             type: String,
             required: true,
           },
+          email: {
+            type: String,
+            required: true,
+          },
+
     });
   
     mongoose.model('School', schoolSchema);

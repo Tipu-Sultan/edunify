@@ -1,121 +1,83 @@
 "use client";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import axios from 'axios';
+import React, { useState } from 'react';
 
 const page = () => {
-  const [loading, setLoading] = useState(false);
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    defaultValues: {
-      name: '',
-      address: '',
-      city: '',
-      state: '',
-      contact: '',
-      email: '',
-      picture: '',
-    }
+  // State to manage form data
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    contact: '',
   });
 
-  const onSubmit = async (data) => {
-    const formData = new FormData();
- 
-    formData.append("name", data.name);
-    formData.append("address", data.address);
-    setLoading(true);
-  
-    try {
-      const response = await axios.post("https://edunify.vercel.app/api/addschool", formData);
-  
-      if (response.status === 200) {
-        const result = response.data;
-        console.log("Data submitted successfully:", result.data);
-        toast.success(result.data.message);
-        setLoading(false);
-      } else {
-        console.error("Failed to submit data:", response.statusText);
-        toast.error("Failed to submit data");
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error submitting data:", error);
-      toast.error("Error submitting data");
-      setLoading(false);
-    }
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
-  
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // TODO: Add API endpoint for data submission
+    // For example, you can use the fetch API or axios
+    const apiUrl = '/api/addschool';
+    
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Data submitted successfully:', data);
+        // You can perform additional actions after successful submission
+      })
+      .catch(error => {
+        console.error('Error submitting data:', error);
+        // Handle errors accordingly
+      });
+  };
 
   return (
-    <div className="min-h-md flex items-center justify-center bg-gray-50">
-      <div className="bg-white p-8 rounded-lg  max-w-6xl w-full shadow-blue">
-        <h1 className="text-2xl font-bold mb-6 text-center text-indigo-600">
-          Add New School
-        </h1>
-        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-          {/* School Name */}
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-600"
-            >
-              School Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className={`mt-1 p-2 w-full border rounded-md ${
-                errors.name
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-indigo-500"
-              }`}
-              {...register("name", { required: true })}
-            />
-            {errors.name && (
-              <p className="text-red-500 mt-1">{errors.name.message}</p>
-            )}
-          </div>
-
-          {/* Address */}
-          <div className="mb-4">
-            <label
-              htmlFor="address"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Address
-            </label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              className={`mt-1 p-2 w-full border rounded-md ${
-                errors.address
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-indigo-500"
-              }`}
-              {...register("address", { required: true })}
-            />
-            {errors.address && (
-              <p className="text-red-500 mt-1">{errors.address.message}</p>
-            )}
-          </div>
-          {/* Submit Button */}
-          <div className="text-center">
-            <button
-              type="submit"
-              className="bg-indigo-500 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300"
-            >
-              {loading && loading ? "Please wait" : "Add School"}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label>
+        name:
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
+      <label>
+        Email:
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
+      <label>
+        Contact:
+        <input
+          type="tel"
+          name="contact"
+          value={formData.contact}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
+      <button type="submit">Submit</button>
+    </form>
   );
 };
 

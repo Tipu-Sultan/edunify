@@ -26,17 +26,12 @@ export default async function handler(req, res) {
       // Connect to the database
       await connectDB();
 
-      // Handle file upload
-      upload.single('picture')(req, res, async (err) => {
-        if (err) {
-          console.error('Error uploading file:', err);
-          return res.status(500).json({ success: false, error: 'Internal Server Error' });
-        }
-
         // Create a new school instance
         const school = new School({
           name: req.body.name,
-          address: req.body.address,
+          contact: req.body.contact,
+          email: req.body.email,
+
         });
 
         // Save the school to the database
@@ -45,9 +40,8 @@ export default async function handler(req, res) {
         // Send response
         res.status(201).json({
           success: true,
-          data: { message: 'School added successfully' },
+          data: {message: 'School added successfully' },
         });
-      });
     } catch (error) {
       console.error('Error adding school:', error);
       res.status(500).json({ success: false, error: 'Internal Server Error' });
