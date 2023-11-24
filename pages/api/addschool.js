@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage })
+const upload = multer({ storage });
 
 export const config = {
   api: {
@@ -25,12 +25,12 @@ export default async function handler(req, res) {
     try {
       // Connect to the database
       await connectDB();
-      res.json({ data: req.body });
+
       // Handle file upload
       upload.single('file')(req, res, async (err) => {
         if (err) {
           console.error('Error uploading file:', err);
-          return res.status(500).json({ success: false, error: `Internal Server Error in File ${req.body.name}` });
+          return res.status(500).json({ success: false, error: 'Internal Server Error in File' });
         }
 
         // Create a new school instance
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
         const savedSchool = await school.save();
 
         // Send response
-        res.status(200).json({
+        res.status(201).json({
           success: true,
           data: {message: 'School added successfully' },
         });
