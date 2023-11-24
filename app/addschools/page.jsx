@@ -1,7 +1,8 @@
-"use client";
+'use client'
 import React, { useState } from 'react';
 
-const page = () => {
+const MyForm = () => {
+  // State to manage form data
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -9,113 +10,81 @@ const page = () => {
     state: '',
     contact: '',
     email: '',
-    picture: null,
   });
 
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === 'file' ? files[0] : value,
-    }));
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  const validateContact = (contact) => /^[0-9]{10}$/.test(contact);
-
-  const validateEmail = (email) =>
-    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-
-  const validateFileType = (file) => {
-    const allowedFileTypes = ['.jpg', '.jpeg', '.png'];
-    const fileExtension = file.name.split('.').pop().toLowerCase();
-    return allowedFileTypes.includes(`.${fileExtension}`);
-  };
-
-  const handleSubmit = async (e) => {
+  // Handle form submission
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate form data here if needed
-    if (
-      !formData.name ||
-      !formData.address ||
-      !formData.city ||
-      !formData.state ||
-      !validateContact(formData.contact) ||
-      !validateEmail(formData.email) ||
-      (formData.picture && !validateFileType(formData.picture))
-    ) {
-      alert('Please fill in all the required fields and provide valid data.');
-      return;
-    }
+    // TODO: Add API endpoint for data submission
+    // For example, you can use the fetch API or axios
+    const apiUrl = '/api/addschool';
 
-    // Simulate loading
-    setLoading(true);
-
-    // Your API request code goes here
-    try {
-      // Example using fetch
-      const apiUrl = '/api/addschool';
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        body: new FormData(e.target),
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Data submitted successfully:', data);
+        // You can perform additional actions after successful submission
+      })
+      .catch((error) => {
+        console.error('Error submitting data:', error);
+        // Handle errors accordingly
       });
-
-      const data = await response.json();
-      console.log('Data submitted successfully:', data);
-
-      // Reset the form after successful submission
-      console.log(formData.name)
-    } catch (error) {
-      console.error('Error submitting data:', error);
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (
-    <div className="min-h-md flex items-center justify-center bg-gray-50">
-      <div className="bg-white p-8 rounded-lg max-w-6xl w-full shadow-blue">
-        <h1 className="text-2xl font-bold mb-6 text-center text-indigo-600">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg max-w-md w-full shadow-md">
+        <h1 className="text-3xl font-bold mb-6 text-center text-indigo-600">
           Add New School
         </h1>
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-          
-          {/* School Name */}
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="name"
+              htmlFor="username"
               className="block text-sm font-medium text-gray-600"
             >
-              School Name
+             School Name:
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md border-gray-300 focus:border-indigo-500"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleInputChange}
+              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
             />
           </div>
 
-          {/* ... (other form fields) ... */}
           <div className="mb-4">
             <label
-              htmlFor="addrees"
+              htmlFor="address"
               className="block text-sm font-medium text-gray-600"
             >
-              School Address
+             School Address:
             </label>
             <input
               type="text"
               id="address"
               name="address"
               value={formData.address}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md border-gray-300 focus:border-indigo-500"
+              onChange={handleInputChange}
+              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
             />
           </div>
 
@@ -124,49 +93,47 @@ const page = () => {
               htmlFor="city"
               className="block text-sm font-medium text-gray-600"
             >
-              School city
+             School City:
             </label>
             <input
               type="text"
               id="city"
               name="city"
               value={formData.city}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md border-gray-300 focus:border-indigo-500"
+              onChange={handleInputChange}
+              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
             />
           </div>
-
           <div className="mb-4">
             <label
               htmlFor="state"
               className="block text-sm font-medium text-gray-600"
             >
-              School state
+             School State:
             </label>
             <input
               type="text"
               id="state"
               name="state"
               value={formData.state}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md border-gray-300 focus:border-indigo-500"
+              onChange={handleInputChange}
+              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
             />
           </div>
-
           <div className="mb-4">
             <label
               htmlFor="contact"
               className="block text-sm font-medium text-gray-600"
             >
-              School contact
+              Contact:
             </label>
             <input
-              type="text"
+              type="tel"
               id="contact"
               name="contact"
               value={formData.contact}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md border-gray-300 focus:border-indigo-500"
+              onChange={handleInputChange}
+              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
             />
           </div>
 
@@ -175,46 +142,23 @@ const page = () => {
               htmlFor="email"
               className="block text-sm font-medium text-gray-600"
             >
-              School email
+              Email:
             </label>
             <input
-              type="text"
+              type="email"
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md border-gray-300 focus:border-indigo-500"
+              onChange={handleInputChange}
+              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
             />
           </div>
-
-          {/* Image Upload (File Input) */}
-          <div className="mb-4">
-            <label
-              htmlFor="image"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Add School Image
-            </label>
-            <input
-              type="file"
-              name="picture"
-              onChange={handleChange}
-              accept=".jpg, .jpeg, .png"
-            />
-          </div>
-
-          {/* ... (other form fields) ... */}
-
-          {/* Submit Button */}
-          <div className="text-center">
-            <button
-              type="submit"
-              className="bg-indigo-500 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300"
-              disabled={loading}
-            >
-              {loading ? 'Please wait' : 'Add School'}
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="w-full bg-indigo-500 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300"
+          >
+            Submit
+          </button>
         </form>
       </div>
     </div>
@@ -222,4 +166,3 @@ const page = () => {
 };
 
 export default page;
-
