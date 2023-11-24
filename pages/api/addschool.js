@@ -14,17 +14,23 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       // Connect to the database
       await connectDB();
-      res.json({ data:{...req.body} });
+      res.json({ data: req.body });
       // Handle file upload
       upload.single('file')(req, res, async (err) => {
         if (err) {
           console.error('Error uploading file:', err);
-          return res.status(500).json({ success: false, error: `Internal Server Error in File ${req.method}` });
+          return res.status(500).json({ success: false, error: `Internal Server Error in File ${req.body.name}` });
         }
 
         // Create a new school instance
