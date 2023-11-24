@@ -35,7 +35,7 @@ router.post(async (req, res) => {
       state,
       contact,
       email,
-      image: req.file.filename,
+      image: req.files.filename,
     });
 
     // Save the school to the database
