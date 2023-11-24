@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const page = () => {
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState(null);
   const {
     register,
     formState: { errors },
@@ -23,13 +22,9 @@ const page = () => {
     }
   });
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append("picture", file);
+    formData.append("picture", data.picture[0]);
     formData.append("name", data.name);
     formData.append("address", data.address);
     formData.append("city", data.city);
@@ -39,29 +34,22 @@ const page = () => {
     setLoading(true);
   
     try {
-      const apiUrl = '/api/addschool';
-    
-    fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Data submitted successfully:', data);
-        // You can perform additional actions after successful submission
-      })
-      .catch(error => {
-        console.error('Error submitting data:', error);
-        // Handle errors accordingly
-      });
+      const response = await axios.post("https://edunify.vercel.app/api/addschool", formData);
+  
+      if (response.status === 200) {
+        const result = response.data;
+        console.log("Data submitted successfully:", result.data);
+        toast.success(result.data.message);
+        setLoading(false);
+      } else {
+        console.error("Failed to submit data:", response.statusText);
+        toast.error("Failed to submit data");
+        setLoading(false);
+      }
     } catch (error) {
       console.error("Error submitting data:", error);
       toast.error("Error submitting data");
       setLoading(false);
-      setFile(null);
     }
   };
   
@@ -238,8 +226,24 @@ const page = () => {
             </label>
             <input
               type="file"
-              onChange={handleFileChange}
+              {...register("picture", {
+                required: "Image is required",
+                validate: {
+                  validFileType: (value) => {
+                    const allowedFileTypes = [".jpg", ".jpeg", ".png"];
+                    const fileExtension = value[0].name
+                      .split(".")
+                      .pop()
+                      .toLowerCase();
+                    return allowedFileTypes.includes(`.${fileExtension}`);
+                  },
+                },
+              })}
+              accept=".jpg, .jpeg, .png"
             />
+            {errors.picture && (
+              <p className="text-red-500 mt-1">{errors.picture.message}</p>
+            )}
           </div>
           {/* Submit Button */}
           <div className="text-center">
