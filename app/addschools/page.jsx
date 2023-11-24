@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-
+import { toast } from "react-toastify";
 const page = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -11,6 +11,7 @@ const page = () => {
     email: '',
     file: null,
   });
+  const [wait,setWait] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -22,31 +23,40 @@ const page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setWait(true)
     const apiUrl = 'https://mancode.onrender.com/api/addschool';
-
+  
     const formDataWithImage = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       formDataWithImage.append(key, value);
     });
-
-    fetch(apiUrl, {
-      method: 'POST',
-      body: formDataWithImage,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Data submitted successfully:', data);
-      })
-      .catch((error) => {
-        console.error('Error submitting data:', error);
+  
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        body: formDataWithImage,
       });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to submit data. Status: ${response.status}`);
+        toast.error('Failed to submit data')
+        setWait(false)
+      }
+  
+      const data = await response.json();
+      setWait(false)
+      toast.error('Data submitted successfully')
+    } catch (error) {
+      console.error('Error submitting data:', error.message);
+      setWait(false)
+    }
   };
+  
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg max-w-md w-full shadow-md">
-        <h1 className="text-3xl font-bold mb-6 text-center text-indigo-600">
+    <div className="min-h-md flex items-center justify-center bg-gray-50">
+      <div className="bg-white p-8 rounded-lg  max-w-6xl w-full shadow-blue">
+        <h1 className="text-2xl font-bold mb-6 text-center text-indigo-600">
           Add New School
         </h1>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -172,7 +182,7 @@ const page = () => {
               type="submit"
               className="w-full bg-indigo-500 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300"
             >
-              Submit
+              {wait?'Please wait':'Submit'}
             </button>
           </div>
         </form>
