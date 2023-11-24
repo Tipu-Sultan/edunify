@@ -26,7 +26,7 @@ export default async function handler(req, res) {
       upload.single('file')(req, res, async (err) => {
         if (err) {
           console.error('Error uploading file:', err);
-          return res.status(500).json({ success: false, error: 'Internal Server Error in File' });
+          return res.status(500).json({ success: false, error: `Internal Server Error in File ${req.body.name}` });
         }
 
         // Create a new school instance
