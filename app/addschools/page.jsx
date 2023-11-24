@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 
 const page = () => {
-  // State to manage form data
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -10,40 +9,37 @@ const page = () => {
     state: '',
     contact: '',
     email: '',
+    image: null,
   });
 
-  // Handle form input changes
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, files } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: type === 'file' ? files[0] : value,
     });
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // TODO: Add API endpoint for data submission
-    // For example, you can use the fetch API or axios
     const apiUrl = '/api/addschool';
+
+    const formDataWithImage = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataWithImage.append(key, value);
+    });
 
     fetch(apiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
+      body: formDataWithImage,
     })
       .then((response) => response.json())
       .then((data) => {
         console.log('Data submitted successfully:', data);
-        // You can perform additional actions after successful submission
       })
       .catch((error) => {
         console.error('Error submitting data:', error);
-        // Handle errors accordingly
       });
   };
 
@@ -53,8 +49,8 @@ const page = () => {
         <h1 className="text-3xl font-bold mb-6 text-center text-indigo-600">
           Add New School
         </h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <div className="mb-4">
             <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-600"
@@ -153,12 +149,32 @@ const page = () => {
               className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-indigo-500 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300"
-          >
-            Submit
-          </button>
+
+          <div className="mb-4">
+            <label
+              htmlFor="image"
+              className="block text-sm font-medium text-gray-600"
+            >
+              School Image:
+            </label>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              onChange={handleInputChange}
+              accept=".jpg, .jpeg, .png"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <div className="text-center">
+            <button
+              type="submit"
+              className="w-full bg-indigo-500 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300"
+            >
+              Submit
+            </button>
+          </div>
         </form>
       </div>
     </div>
