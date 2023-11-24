@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 
-const MyForm = () => {
+const page = () => {
   // State to manage form data
   const [formData, setFormData] = useState({
     name: '',
