@@ -16,7 +16,6 @@ export default async function handler(req, res) {
           state: req.body.state,
           contact: req.body.contact,
           email: req.body.email,
-          image: req.file ? req.file.filename : 'ok', // Check if req.file is present
         });
 
         // Save the school to the database
