@@ -1,6 +1,6 @@
 // pages/api/addschool.js
 import { connectDB } from '../../utils/db';
-import School from '../../models/school';
+import {School} from '../../models/school';
 import multer from 'multer';
 
 const storage = multer.diskStorage({
@@ -14,11 +14,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -27,7 +23,7 @@ export default async function handler(req, res) {
       await connectDB();
 
       // Handle file upload
-      upload.single('picture')(req, res, async (err) => {
+      upload.single('file')(req, res, async (err) => {
         if (err) {
           console.error('Error uploading file:', err);
           return res.status(500).json({ success: false, error: 'Internal Server Error in File' });

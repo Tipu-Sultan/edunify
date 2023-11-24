@@ -1,6 +1,5 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-if (!mongoose.models.School) {
     const schoolSchema = new mongoose.Schema({
         name: {
             type: String,
@@ -33,6 +32,6 @@ if (!mongoose.models.School) {
           },
     });
   
-    mongoose.model('School', schoolSchema);
-  }
-  export default mongoose.models.School;
+  mongoose.models = {};
+
+  export const School = mongoose.model("School", schoolSchema);
