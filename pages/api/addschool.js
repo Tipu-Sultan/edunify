@@ -1,13 +1,42 @@
 // pages/api/addschool.js
 import { connectDB } from '../../utils/db';
 import School from '../../models/school';
+import multer from 'multer';
 
+// Set up Multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads"); // Uploads folder where files will be stored
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname); // Unique filename
+  },
+});
+
+// Restrict file types to video only
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only video files are allowed."), false);
+  }
+};
+
+const upload = multer({ storage, fileFilter });
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       // Connect to the database
       await connectDB();
+
+      // Handle file upload
+      upload.single('file')(req, res, async (err) => {
+        if (err) {
+          console.error('Error uploading file:', err);
+          return res.status(500).json({ success: false, error: 'Internal Server Error for file' });
+        }
+
         // Create a new school instance
         const school = new School({
           name: req.body.name,
@@ -16,6 +45,7 @@ export default async function handler(req, res) {
           state: req.body.state,
           contact: req.body.contact,
           email: req.body.email,
+          image: req.file.filename,
         });
 
         // Save the school to the database
@@ -26,6 +56,7 @@ export default async function handler(req, res) {
           success: true,
           data: {message: 'School added successfully' },
         });
+      });
     } catch (error) {
       console.error('Error adding school:', error);
       res.status(500).json({ success: false, error: 'Internal Server Error for data' });

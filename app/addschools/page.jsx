@@ -23,7 +23,7 @@ const page = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const apiUrl = '/api/addschool';
+    const apiUrl = 'https://mancode.onrender.com/api/addschool';
 
     const formDataWithImage = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
