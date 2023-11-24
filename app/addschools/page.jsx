@@ -9,7 +9,7 @@ const page = () => {
     state: '',
     contact: '',
     email: '',
-    image: null,
+    picture: null,
   });
 
   const handleInputChange = (e) => {
@@ -152,15 +152,15 @@ const page = () => {
 
           <div className="mb-4">
             <label
-              htmlFor="image"
+              htmlFor="picture"
               className="block text-sm font-medium text-gray-600"
             >
-              School Image:
+              School Picture:
             </label>
             <input
               type="file"
-              id="image"
-              name="image"
+              id="picture"
+              name="picture"
               onChange={handleInputChange}
               accept=".jpg, .jpeg, .png"
             />
