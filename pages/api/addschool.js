@@ -1,7 +1,7 @@
 // pages/api/addschool.js
 import { connectDB } from '../../utils/db';
 const multer = require("multer");
-const School = require("../modals/school");
+const School = require("../../models/school");
 
 // Set up Multer for file uploads
 const storage = multer.diskStorage({
