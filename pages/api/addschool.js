@@ -5,7 +5,7 @@ import multer from 'multer';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./public/images"); // Uploads folder where files will be stored
+    cb(null, "public/images"); // Uploads folder where files will be stored
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname); // Unique filename
@@ -25,14 +25,13 @@ export default async function handler(req, res) {
     try {
       // Connect to the database
       await connectDB();
-
+      
       // Handle file upload
       upload.single('file')(req, res, async (err) => {
         if (err) {
           console.error('Error uploading file:', err);
-          return res.status(500).json({ success: false, error: 'Internal Server Error in File' });
+          return res.status(500).json({ success: false, error: 'Internal Server Error' });
         }
-
         // Create a new school instance
         const school = new School({
           name: req.body.name,
@@ -55,7 +54,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error('Error adding school:', error);
-      res.status(500).json({ success: false, error: 'Internal Server Error in All' });
+      res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
