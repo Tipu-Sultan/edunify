@@ -1,78 +1,58 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { toast } from "react-toastify";
-const Page = () => {
+const page = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    address: "",
-    city: "",
-    state: "",
-    contact: "",
-    email: "",
+    name: '',
+    address: '',
+    city: '',
+    state: '',
+    contact: '',
+    email: '',
     file: null,
   });
-  const [wait, setWait] = useState(false);
+  const [wait,setWait] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
-
-    // Validation functions
-    const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const isValidContact = (contact) => /^[0-9]{10}$/.test(contact);
-    const isValidImage = (file) => {
-      if (!file) return true; // No file selected is considered valid
-      const allowedFileTypes = [".jpg", ".jpeg", ".png"];
-      const fileExtension = file.name.split(".").pop().toLowerCase();
-      return allowedFileTypes.includes(`.${fileExtension}`);
-    };
-
-    // Validation check based on the input name
-    let isValidInput = true;
-    if (name === "email") {
-      isValidInput = isValidEmail(value);
-    } else if (name === "contact") {
-      isValidInput = isValidContact(value);
-    } else if (name === "file") {
-      isValidInput = isValidImage(files[0]);
-    }
-
-    // Update form data only if the input is valid
-    if (isValidInput) {
-      setFormData({
-        ...formData,
-        [name]: type === "file" ? files[0] : value,
-      });
-    }
+    setFormData({
+      ...formData,
+      [name]: type === 'file' ? files[0] : value,
+    });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setWait(true);
-
-    const apiUrl = "https://mancode.onrender.com/api/addschool";
-
+    setWait(true)
+    const apiUrl = 'https://mancode.onrender.com/api/addschool';
+  
     const formDataWithImage = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       formDataWithImage.append(key, value);
     });
-
+  
     try {
       const response = await fetch(apiUrl, {
-        method: "POST",
+        method: 'POST',
         body: formDataWithImage,
       });
-
+  
       if (!response.ok) {
         throw new Error(`Failed to submit data. Status: ${response.status}`);
+        toast.error('Failed to submit data')
+        setWait(false)
       }
-
+  
       const data = await response.json();
-      setWait(false);
-      toast.success("Data submitted successfully");
+      setWait(false)
+      toast.success('Data submitted successfully')
     } catch (error) {
-      console.error("Error submitting data:", error.message);
-      setWait(false);
-      toast.error("Failed to submit data");
+      console.error('Error submitting data:', error.message);
+      setWait(false)
     }
   };
+  
+
   return (
     <div className="min-h-md flex items-center justify-center bg-gray-50">
       <div className="bg-white p-8 rounded-lg  max-w-6xl w-full shadow-blue">
@@ -80,12 +60,12 @@ const Page = () => {
           Add New School
         </h1>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="mb-4">
+        <div className="mb-4">
             <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-600"
             >
-              School Name:
+             School Name:
             </label>
             <input
               type="text"
@@ -102,7 +82,7 @@ const Page = () => {
               htmlFor="address"
               className="block text-sm font-medium text-gray-600"
             >
-              School Address:
+             School Address:
             </label>
             <input
               type="text"
@@ -119,7 +99,7 @@ const Page = () => {
               htmlFor="city"
               className="block text-sm font-medium text-gray-600"
             >
-              School City:
+             School City:
             </label>
             <input
               type="text"
@@ -135,7 +115,7 @@ const Page = () => {
               htmlFor="state"
               className="block text-sm font-medium text-gray-600"
             >
-              School State:
+             School State:
             </label>
             <input
               type="text"
@@ -196,29 +176,13 @@ const Page = () => {
             />
           </div>
 
-          {/* Validation messages */}
-          {formData.email && !isValidEmail(formData.email) && (
-            <p className="text-red-500 mt-1">Invalid email address</p>
-          )}
-          {formData.contact && !isValidContact(formData.contact) && (
-            <p className="text-red-500 mt-1">
-              Invalid contact number. Please enter a 10-digit number.
-            </p>
-          )}
-          {formData.file && !isValidImage(formData.file) && (
-            <p className="text-red-500 mt-1">
-              Invalid image type. Only JPG, JPEG, and PNG are allowed.
-            </p>
-          )}
-
           {/* Submit Button */}
           <div className="text-center">
             <button
               type="submit"
               className="w-full bg-indigo-500 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300"
-              disabled={wait}
             >
-              {wait ? "Please wait" : "Submit"}
+              {wait?'Please wait':'Submit'}
             </button>
           </div>
         </form>
@@ -227,4 +191,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page;
