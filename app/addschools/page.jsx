@@ -67,15 +67,7 @@ const page = () => {
       console.log('Data submitted successfully:', data);
 
       // Reset the form after successful submission
-      setFormData({
-        name: '',
-        address: '',
-        city: '',
-        state: '',
-        contact: '',
-        email: '',
-        picture: null,
-      });
+      console.log(formData.name)
     } catch (error) {
       console.error('Error submitting data:', error);
     } finally {
