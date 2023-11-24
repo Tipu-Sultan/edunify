@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     try {
       // Connect to the database
       await connectDB();
-      res.json({ error: `check value ${req.body.name}` });
+      res.json({ error: `check value ${req.body}` });
       // Handle file upload
       upload.single('file')(req, res, async (err) => {
         if (err) {
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         const savedSchool = await school.save();
 
         // Send response
-        res.status(201).json({
+        res.status(200).json({
           success: true,
           data: {message: 'School added successfully' },
         });
