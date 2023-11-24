@@ -1,64 +1,72 @@
 // pages/api/addschool.js
 import { connectDB } from '../../utils/db';
-import School from '../../models/school';
-// pages/api/addschool.js
-import nc from 'next-connect';
-import multer from 'multer';
+const multer = require("multer");
+const School = require("../modals/school");
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: './public/images',
-    filename: (req, file, cb) => {
-      cb(null, Date.now() + '-' + file.originalname);
-    },
-  }),
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-      cb(null, true);
-    } else {
-      cb(new Error('Only Image files are allowed.'), false);
-    }
+// Set up Multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/images"); // Uploads folder where files will be stored
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname); // Unique filename
   },
 });
 
-const apiRoute = nc();
+// Restrict file types to video only
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only Image files are allowed."), false);
+  }
+};
 
-apiRoute.use(upload.single('file'));
+const upload = multer({ storage, fileFilter });
 
-apiRoute.post(async (req, res) => {
-  try {
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    try {
+      // Connect to the database
+      await connectDB();
 
-    await connectDB();
+      // Handle file upload
+      upload.single("file")(req, res, async (err) => {
+        if (err) {
+          console.error('Error uploading file:', err);
+          return res.status(500).json({ success: false, error: 'Internal Server Error for file' });
+        }
 
-    // Create a new school instance
-    const school = new School({
-      name: req.body.name,
-      address: req.body.address,
-      city: req.body.city,
-      state: req.body.state,
-      contact: req.body.contact,
-      email: req.body.email,
-      image: req.file.filename,
-    });
+        // Create a new school instance
+        const school = new School({
+          name: req.body.name,
+          address: req.body.address,
+          city: req.body.city,
+          state: req.body.state,
+          contact: req.body.contact,
+          email: req.body.email,
+          image:req.file.filename,
+        });
 
-    // Save the school to the database
-    const savedSchool = await School.save();
+        // Save the school to the database
+        const savedSchool = await school.save();
 
-    // Send the image URL in the response
+    // Send response
     res.status(201).json({
       success: true,
       data: {
-        message: 'School added successfully',
+        message: "School added successfully",
       },
     });
-  } catch (error) {
-    console.error('Error adding school:', error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+      });
+    } catch (error) {
+      console.error('Error adding school:', error);
+      res.status(500).json({ success: false, error: 'Internal Server Error for data' });
+    }
+  } else {
+    res.status(405).json({ message: 'Method Not Allowed' });
   }
-});
-
-export default apiRoute;
-
+}
 
 
 
