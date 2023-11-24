@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     try {
       // Connect to the database
       await connectDB();
-      res.json({ error: `check value ${req.body}` });
+      res.json({ data:{...req.body} });
       // Handle file upload
       upload.single('file')(req, res, async (err) => {
         if (err) {
