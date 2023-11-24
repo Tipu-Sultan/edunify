@@ -2,14 +2,15 @@
 // pages/schools.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-const page = () => {
+
+const Schools = () => {
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('https://mancode.onrender.com/api/getschool'); 
+        const response = await axios.get('https://mancode.onrender.com/api/getschool');
         if (response.status === 200) {
           setSchools(response.data);
         } else {
@@ -26,20 +27,23 @@ const page = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center h-screen">
       {loading ? (
-        <div className='flex items-center justify-center h-screen'>
+        <div className='flex items-center justify-center'>
           <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-indigo-500 mx-auto"></div>
         </div>
-      ) : (
+      ) : schools.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {schools.map((school) => <SchoolCard key={school.id} school={school} />)}
+        </div>
+      ) : (
+        <div className="text-center">
+          <p className="text-xl font-bold mb-4">Oops! No schools available.</p>
+          {/* You can add additional content or suggestions here */}
         </div>
       )}
     </div>
   );
-  
-  
 };
 
 const SchoolCard = ({ school }) => {
@@ -62,7 +66,5 @@ const SchoolCard = ({ school }) => {
   );
 };
 
+export default Schools;
 
-
-
-export default page;
