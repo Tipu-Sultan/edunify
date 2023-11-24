@@ -1,11 +1,12 @@
 import { connectDB } from '../../utils/db';
 import {School} from '../../models/school';
-import multer from 'multer';
 import fs from 'fs';
+import path from 'path';
+import multer from 'multer';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = 'public/images';
+    const uploadPath = '/tmp/images'; // Save files to /tmp/images
 
     // Create the directory if it doesn't exist
     if (!fs.existsSync(uploadPath)) {
@@ -18,7 +19,6 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
-
 
 const upload = multer({ storage });
 
