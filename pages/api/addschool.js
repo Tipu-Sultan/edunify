@@ -6,7 +6,7 @@ import multer from 'multer';
 // Set up Multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "punlic/images"); // Uploads folder where files will be stored
+    cb(null, "public/images"); // Uploads folder where files will be stored
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname); // Unique filename
