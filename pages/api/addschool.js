@@ -3,34 +3,26 @@ import { connectDB } from '../../utils/db';
 import School from '../../models/school';
 import multer from 'multer';
 
+// Set up Multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/images'); // Uploads folder where files will be stored
+    cb(null, "punlic/images"); // Uploads folder where files will be stored
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname); // Unique filename
+    cb(null, Date.now() + "-" + file.originalname); // Unique filename
   },
 });
 
-const upload = multer({
-  storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5, // 5 MB limit
-  },
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-      cb(null, true);
-    } else {
-      cb(new Error('Invalid file type. Only images are allowed.'));
-    }
-  },
-});
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
+// Restrict file types to video only
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only Image files are allowed."), false);
+  }
 };
+
+const upload = multer({ storage, fileFilter });
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -39,10 +31,10 @@ export default async function handler(req, res) {
       await connectDB();
 
       // Handle file upload
-      upload.single('picture')(req, res, async (err) => {
+      upload.single('file')(req, res, async (err) => {
         if (err) {
           console.error('Error uploading file:', err);
-          return res.status(500).json({ success: false, error: 'Internal Server Error' });
+          return res.status(500).json({ success: false, error: 'Internal Server Error for file' });
         }
 
         // Create a new school instance
@@ -53,7 +45,7 @@ export default async function handler(req, res) {
           state: req.body.state,
           contact: req.body.contact,
           email: req.body.email,
-          image: req.file ? req.file.filename : null, // Check if req.file is present
+          image: req.file ? req.file.filename : 'ok', // Check if req.file is present
         });
 
         // Save the school to the database
@@ -67,7 +59,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error('Error adding school:', error);
-      res.status(500).json({ success: false, error: 'Internal Server Error' });
+      res.status(500).json({ success: false, error: 'Internal Server Error for data' });
     }
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
