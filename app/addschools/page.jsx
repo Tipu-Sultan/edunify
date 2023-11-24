@@ -24,7 +24,7 @@ const page = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append("picture", data.file[0]);
+    formData.append("file", data.file[0]);
     formData.append("name", data.name);
     formData.append("address", data.address);
     formData.append("city", data.city);
