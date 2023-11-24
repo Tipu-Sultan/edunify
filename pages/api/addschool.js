@@ -25,6 +25,10 @@ export default async function handler(req, res) {
     try {
       // Connect to the database
       await connectDB();
+      res.status(201).json({
+        success: true,
+        data: {message: 'School added successfully',name: req.body.name,email: req.body.email },
+      });
       
       // Handle file upload
       // upload.single('file')(req, res, async (err) => {
