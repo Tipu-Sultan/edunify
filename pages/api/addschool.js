@@ -27,11 +27,12 @@ export default async function handler(req, res) {
       await connectDB();
       
       // Handle file upload
-      upload.single('file')(req, res, async (err) => {
-        if (err) {
-          console.error('Error uploading file:', err);
-          return res.status(500).json({ success: false, error: 'Internal Server Error file',Name:req.body.name });
-        }
+      // upload.single('file')(req, res, async (err) => {
+      //   if (err) {
+      //     console.error('Error uploading file:', err);
+      //     return res.status(500).json({ success: false, error: 'Internal Server Error file',Name:req.body.name });
+      //   }
+      // });
         // Create a new school instance
         const school = new School({
           name: req.body.name,
@@ -40,7 +41,7 @@ export default async function handler(req, res) {
           state: req.body.state,
           contact: req.body.contact,
           email: req.body.email,
-          image: req.file.filename,
+          image: req.file ? req.file.filename :'ok.jpg' ,
         });
 
         // Save the school to the database
@@ -51,7 +52,7 @@ export default async function handler(req, res) {
           success: true,
           data: {message: 'School added successfully' },
         });
-      });
+      
     } catch (error) {
       console.error('Error adding school:', error);
       res.status(500).json({ success: false, error: 'Internal Server Error all' });
