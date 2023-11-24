@@ -5,7 +5,7 @@ import multer from 'multer';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/images"); // Uploads folder where files will be stored
+    cb(null, "./public/images"); // Uploads folder where files will be stored
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname); // Unique filename
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       upload.single('picture')(req, res, async (err) => {
         if (err) {
           console.error('Error uploading file:', err);
-          return res.status(500).json({ success: false, error: 'Internal Server Error' });
+          return res.status(500).json({ success: false, error: 'Internal Server Error in File' });
         }
 
         // Create a new school instance
@@ -50,12 +50,12 @@ export default async function handler(req, res) {
         // Send response
         res.status(201).json({
           success: true,
-          data: { id: savedSchool._id, ...req.body, picture: req.file.filename, message: 'School added successfully' },
+          data: {message: 'School added successfully' },
         });
       });
     } catch (error) {
       console.error('Error adding school:', error);
-      res.status(500).json({ success: false, error: 'Internal Server Error' });
+      res.status(500).json({ success: false, error: 'Internal Server Error in All' });
     }
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
