@@ -32,9 +32,6 @@ export default async function handler(req, res) {
           name: req.body.name,
           address: req.body.address,
           city: req.body.city,
-          state: req.body.state,
-          contact: req.body.contact,
-          email: req.body.email,
         });
 
         // Save the school to the database

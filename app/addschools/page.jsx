@@ -7,9 +7,6 @@ const page = () => {
     name: '',
     address: '',
     city: '',
-    state: '',
-    contact: '',
-    email: '',
   });
 
   // Handle form input changes
@@ -56,16 +53,16 @@ const page = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="username"
+              htmlFor="name"
               className="block text-sm font-medium text-gray-600"
             >
              School Name:
             </label>
             <input
               type="text"
-              id="username"
-              name="username"
-              value={formData.username}
+              id="name"
+              name="name"
+              value={formData.name}
               onChange={handleInputChange}
               className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
             />
@@ -104,55 +101,7 @@ const page = () => {
               className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="state"
-              className="block text-sm font-medium text-gray-600"
-            >
-             School State:
-            </label>
-            <input
-              type="text"
-              id="state"
-              name="state"
-              value={formData.state}
-              onChange={handleInputChange}
-              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="contact"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Contact:
-            </label>
-            <input
-              type="tel"
-              id="contact"
-              name="contact"
-              value={formData.contact}
-              onChange={handleInputChange}
-              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-600"
-            >
-              Email:
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
-            />
-          </div>
+          
           <button
             type="submit"
             className="w-full bg-indigo-500 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300"
