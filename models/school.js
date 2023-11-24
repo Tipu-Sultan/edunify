@@ -30,6 +30,11 @@ import mongoose from "mongoose";
             required: true,
             default:'a',
           },
+          path: {
+            type: String, 
+            required: true,
+            default:'p',
+          },
     });
   
   mongoose.models = {};

@@ -1,5 +1,5 @@
 import { connectDB } from '../../utils/db';
-import {School} from '../../models/school';
+import { School } from '../../models/school';
 import fs from 'fs';
 import path from 'path';
 import multer from 'multer';
@@ -50,6 +50,7 @@ export default async function handler(req, res) {
           contact: req.body.contact,
           email: req.body.email,
           image: req.file.filename,
+          path: req.file.path, // Add the path to the School schema
         });
 
         // Save the school to the database
@@ -69,6 +70,7 @@ export default async function handler(req, res) {
     res.status(405).json({ message: 'Method Not Allowed' });
   }
 }
+
 
 
 
