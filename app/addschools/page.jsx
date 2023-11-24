@@ -36,7 +36,7 @@ const page = () => {
     try {
       const response = await axios.post("/api/addschool", formData);
   
-      if (response.status === 201) {
+      if (response.status === 200) {
         const result = response.data;
         console.log("Data submitted successfully:", result.data);
         toast.success(result.data.message);
