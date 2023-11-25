@@ -10,7 +10,7 @@ const Schools = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('https://mancode.onrender.com/api/getschool');
+        const response = await axios.get('/api/getschool');
         if (response.status === 200) {
           setSchools(response.data);
         } else {
