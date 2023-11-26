@@ -29,7 +29,7 @@ const Schools = () => {
   return (
     <div className="flex items-center justify-center">
       {loading ? (
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-center h-screen'>
           <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-indigo-500 mx-auto"></div>
           Wait a couple of minute
         </div>
@@ -38,7 +38,7 @@ const Schools = () => {
           {schools.map((school) => <SchoolCard key={school.id} school={school} />)}
         </div>
       ) : (
-        <div className="text-center">
+        <div className="text-center h-screen">
           <p className="text-xl font-bold mb-4">Oops! No schools available.</p>
           {/* You can add additional content or suggestions here */}
         </div>
