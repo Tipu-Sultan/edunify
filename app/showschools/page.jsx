@@ -30,7 +30,8 @@ const Schools = () => {
     <div className="flex items-center justify-center">
       {loading ? (
         <div className='flex items-center justify-center'>
-          <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-indigo-500 mx-auto">Wait a couple of minute</div>
+          <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-indigo-500 mx-auto"></div>
+          Wait a couple of minute
         </div>
       ) : schools.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
