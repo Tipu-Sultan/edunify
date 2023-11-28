@@ -34,7 +34,7 @@ const page = () => {
     setLoading(true);
   
     try {
-      const response = await axios.post("http://myblogger.000.pe/addschool.php", formData);
+      const response = await axios.post("https://myblogger.000.pe/addschool.php", formData);
   
       if (response.status === 201) {
         const result = response.data;
