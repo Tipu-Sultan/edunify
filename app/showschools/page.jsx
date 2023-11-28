@@ -12,7 +12,7 @@ const Schools = () => {
       try {
         const response = await axios.get('http://myblogger.000.pe/getschools.php');
         if (response.status === 200) {
-          setSchools(response.data);
+          setSchools(response.data.data);
         } else {
           console.error('Failed to fetch schools:', response.statusText);
         }
