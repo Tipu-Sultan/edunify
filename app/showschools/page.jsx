@@ -10,7 +10,7 @@ const Schools = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('https://myblogger.000.pe/getschools.php');
+        const response = await axios.get('https://myblogger.000.pe/getschools.php',{ withCredentials: true });
         if (response.status === 200) {
           setSchools(response.data.data);
         } else {
