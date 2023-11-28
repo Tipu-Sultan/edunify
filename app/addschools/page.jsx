@@ -34,12 +34,12 @@ const page = () => {
     setLoading(true);
   
     try {
-      const response = await axios.post("https://myblogger.000.pe/addschool.php", formData);
+      const response = await axios.post("https://mancode.onrender.com/api/addschool", formData);
   
       if (response.status === 201) {
         const result = response.data;
         console.log("Data submitted successfully:", result.data);
-        toast.success(result.message);
+        toast.success(result.data.message);
         setLoading(false);
       } else {
         console.error("Failed to submit data:", response.statusText);

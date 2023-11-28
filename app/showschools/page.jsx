@@ -9,16 +9,18 @@ const Schools = () => {
 
   useEffect(() => {
     const fetchSchools = async () => {
-      axios.get('https://myblogger.000.pe/getschools.php')
-  .then(response => {
-    console.log(response); // Log the entire response
-    console.log(response.data); // Log the response data
-    setSchools(response.data.data)
-  })
-  .catch(error => {
-    console.error('Error fetching schools:', error.message);
-  });
-
+      try {
+        const response = await axios.get('https://mancode.onrender.com/api/getschool');
+        if (response.status === 200) {
+          setSchools(response.data);
+        } else {
+          console.error('Failed to fetch schools:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching schools:', error.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchSchools();
@@ -52,7 +54,7 @@ const SchoolCard = ({ school }) => {
     <div className="bg-white p-4 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 delay-150">
       <div className="mb-4 relative overflow-hidden">
         <img
-          src={`https://myblogger.000.pe/${school.image}`}
+          src={`https://mancode.onrender.com/uploads/${school.image}`}
           alt={school.name}
           className="w-full h-32 object-cover rounded-md transform scale-100 hover:scale-110 transition-transform delay-150"
         />
