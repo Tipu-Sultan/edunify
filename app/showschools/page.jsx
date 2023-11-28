@@ -9,18 +9,16 @@ const Schools = () => {
 
   useEffect(() => {
     const fetchSchools = async () => {
-      try {
-        const response = await axios.get('https://myblogger.000.pe/getschools.php',{ withCredentials: true });
-        if (response.status === 200) {
-          setSchools(response.data.data);
-        } else {
-          console.error('Failed to fetch schools:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error fetching schools:', error.message);
-      } finally {
-        setLoading(false);
-      }
+      axios.get('https://myblogger.000.pe/getschools.php')
+  .then(response => {
+    console.log(response); // Log the entire response
+    console.log(response.data); // Log the response data
+    setSchools(response.data.data)
+  })
+  .catch(error => {
+    console.error('Error fetching schools:', error.message);
+  });
+
     };
 
     fetchSchools();
