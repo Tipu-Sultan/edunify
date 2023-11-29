@@ -47,7 +47,7 @@ const SchoolCard = ({ school }) => {
     <div className="bg-white p-4 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 delay-150">
       <div className="mb-4 relative overflow-hidden">
         <img
-          src={`https://storage.cloud.google.com/edunify/${school.image}`}
+          src={`https://mancode.onrender.com/uploads/${school.image}`}
           alt={school.name}
           className="w-full h-32 object-cover rounded-md transform scale-100 hover:scale-110 transition-transform delay-150"
         />

@@ -35,7 +35,7 @@ const page = () => {
     setLoading(true);
   
     try {
-      const response = await fetch("/api/addschool", {
+      const response = await fetch("https://mancode.onrender.com/api/addschool", {
         method: "POST",
         body: formData,
       });
