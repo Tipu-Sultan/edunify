@@ -1,0 +1,14 @@
+{
+    "type": "service_account",
+    "project_id": "tipucorona",
+    "private_key_id": "f7ed7e16d787381fa7219be64e4b30e58e2acf17",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQCkHCBumMxJTvS3\n3Ilr8djGM4jqnLpFxSk1/i9qX1vWuZKyRhQOlUVNmrNLIUQcmfEWVkT/4ZfvGbTG\n8n2TpgfAnfFk/NUKiU7fwYs3tBHwj7wQmxBbWgOiiz/eOrvauEcKFgDmuC9QRvGW\n2CFW5uPkDqloyO0phkhEJ196B6RENbN49xzajNdQ8QTO7mhZXskOJgAagUGTTupp\nqAv/K/rTbbqWGofc2msyu1TdF0A6p3rhBul9bMsOHAca0xNB1DLmx2YUQVpIUH1n\nUMB2OlzBa/rDVtxyhbMzqRvrAHB1h87NhKshzyIFkKoT25q8YrSdoVl/1RPhb61r\nsmFkofPBAgMBAAECgf9+emIeDdgwp4/AJB4rk1JkoezKF2arXvuwurYDkhRPT0/Z\ne/XGFEUIcLHxG5ivpY6o9TprlIudoUvLohe/zOkso8C0LcE2dzYF1qRbY4YJk/B2\n29gMKToKWK36F+Ovx1Yr78lboTGik3EEg8EuHve3GMjeEsmCHa7618PXYj+EUQks\nJ3+a6NjKtparPjzg2aftQL7+OUuIPR+U09ca0nbrVmp86bwKoHnTHTGnV/pnE2rE\nN3HIbrTIJ+rNmpKW4X9sX4CQCVCqZaFL7okg1wGKVRY4f25SxA1CeS1Q5pMG4SdU\npmAeODryJPdz/odrCUoBKYQkp2JteFqONX7Rf9kCgYEA1DkmHSq/495qzfHk0xnj\nJmRJWyIg/Mx21Si3k3YnNzs2TFB1M/MDM2s5muQsKLWvcY/u7EO3ynlDrKN1z70Y\n2iuzd2MDSpeiOMs2AmgBcEx6gCWS/xi0j/rrat6En0KgPt0kVHAVV83jRrN1zIok\n37WLqxBlBmmGaaMR2dSclvUCgYEAxfZCkbXCPnEmGAF04P7AnmldIkAq9MbuEZgy\nOhUy/tZdZvkOAhlhQEatK0mTNW6U4W2Ybdm4hQoPXoqriRMAAH6Fj8wuQq4R7EHY\nyWVRRcBor3xwXgmBPi1KS3eOxgEjytVA7kkm+mZrt7fmrA43NHsG3OEjl87GIFQH\nW0glMh0CgYA4o8QDVsx98XeJ3XxXxvnz3iIh23r4XU192G8eQRN4TypPtc2B/uKk\nz4JBT5Jljw/y/BolHnGn7TNdmQaxWeOPHsi4HUncl5mpFLsma0GvCgpLtzuDL8HJ\nB4vbKuY0ZyDDhlvS2VMo6v80eGMBIwFyX06Wajq8Ol+wQ+BYxcDBHQKBgGwP/NDL\nlkg9vdy21tWHWyBeRc/PlWNfQE/sc+aO8fJ4lC4E4Ge28QaETj1mAWzWe4D/MYkt\no3NERZWHPxIphAPBDSms/Me7e98rJqrxmsbnvH2nATPkHmARmw/NKOvfbWlotfQd\njKB9zmlQgyQC8pG8YseqQqK45iB5njZvEJblAoGALwPywNi0QHf1gTDNnNxz7InY\nAhdupuWq6hKCGpAkuR3hKIEyyDi8aOWUMF3WtBqGRyEtcehUQHgESEwSrXj+CQge\nLEmycpzuydqBUancUdhonrdVSabkV5c7CCsgyOCXOSh0uLXVMvKF8g8n9AG9Ah8Z\ndkySB7zGz0dpO8D4r5I=\n-----END PRIVATE KEY-----\n",
+    "client_email": "edunify@tipucorona.iam.gserviceaccount.com",
+    "client_id": "117784553183923766142",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/edunify%40tipucorona.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }
+  
