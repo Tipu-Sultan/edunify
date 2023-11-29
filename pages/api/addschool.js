@@ -5,11 +5,11 @@ import { connectDB } from '../../utils/db';
 import {School} from '../../models/school';
 const path = require('path');
 
-const keyFilePath = path.join(__dirname, 'public', 'edunifyKey.json');
+const KeyFilePath = path.join(__dirname, 'public', 'edunifyKey.json');
 
 const storage = new Storage({
   projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
-  keyFilename: keyFilePath,
+  keyFilename: KeyFilePath,
 });
 
 const bucket = storage.bucket('edunify');
