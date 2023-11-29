@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import axios from 'axios';
 
 const page = () => {
   const [loading, setLoading] = useState(false);
@@ -9,7 +10,17 @@ const page = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: '',
+      address: '',
+      city: '',
+      state: '',
+      contact: '',
+      email: '',
+      file: '',
+    }
+  });
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -21,7 +32,9 @@ const page = () => {
     formData.append("contact", data.contact);
     formData.append("email", data.email);
     setLoading(true);
+  
     try {
+<<<<<<< HEAD
       const response = await fetch("/api/addschool", {
         method: "POST",
         body: formData,
@@ -29,6 +42,12 @@ const page = () => {
     
       if (response.ok) {
         const result = await response.json();
+=======
+      const response = await axios.post("https://mancode.onrender.com/api/addschool", formData);
+  
+      if (response.status === 201) {
+        const result = response.data;
+>>>>>>> 13d5c3f64770a5b82918b6f861754cca3711296e
         console.log("Data submitted successfully:", result.data);
         toast.success(result.data.message);
       } else {
@@ -37,11 +56,17 @@ const page = () => {
       }
     } catch (error) {
       console.error("Error submitting data:", error);
+<<<<<<< HEAD
     } finally {
       setLoading(false); // This code will run regardless of success or failure
+=======
+      toast.error("Error submitting data");
+      setLoading(false);
+>>>>>>> 13d5c3f64770a5b82918b6f861754cca3711296e
     }
     
   };
+  
 
   return (
     <div className="min-h-md flex items-center justify-center bg-gray-50">
@@ -208,7 +233,11 @@ const page = () => {
           {/* Image Upload (File Input) */}
           <div className="mb-4">
             <label
+<<<<<<< HEAD
               htmlFor="email"
+=======
+              htmlFor="file"
+>>>>>>> 13d5c3f64770a5b82918b6f861754cca3711296e
               className="block text-sm font-medium text-gray-600"
             >
               Add School Image
@@ -231,7 +260,11 @@ const page = () => {
               accept=".jpg, .jpeg, .png"
             />
             {errors.file && (
+<<<<<<< HEAD
               <p className="text-red-500 mt-1">{errors.picture.message}</p>
+=======
+              <p className="text-red-500 mt-1">{errors.file.message}</p>
+>>>>>>> 13d5c3f64770a5b82918b6f861754cca3711296e
             )}
           </div>
           {/* Submit Button */}

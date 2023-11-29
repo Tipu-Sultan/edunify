@@ -21,7 +21,7 @@
 
 // pages/api/schools.js
 import { connectDB } from '../../utils/db';
-import School from '../../models/school';
+import {School} from '../../models/school';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
