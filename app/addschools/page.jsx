@@ -33,37 +33,27 @@ const page = () => {
     formData.append("contact", data.contact);
     formData.append("email", data.email);
     setLoading(true);
-
+  
     try {
       const response = await fetch("/api/addschool", {
         method: "POST",
         body: formData,
       });
-
+  
       if (response.ok) {
         const result = await response.json();
-
-        const response = await axios.post("https://mancode.onrender.com/api/addschool", formData);
-
-        if (response.status === 201) {
-          const result = response.data;
-          console.log("Data submitted successfully:", result.data);
-          toast.success(result.data.message);
-        } else {
-          console.error("Failed to submit data:", response.statusText);
-          toast.error("Failed to submit data");
-        }
+        console.log("Data submitted successfully:", result.data);
+        toast.success(result.data.message);
+      } else {
+        console.error("Failed to submit data:", response.statusText);
+        toast.error("Failed to submit data");
       }
     } catch (error) {
       console.error("Error submitting data:", error);
-
-    } finally {
-      setLoading(false); // This code will run regardless of success or failure
-
       toast.error("Error submitting data");
+    } finally {
       setLoading(false);
     }
-
   };
 
 
