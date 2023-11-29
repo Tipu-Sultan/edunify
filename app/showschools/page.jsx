@@ -33,7 +33,7 @@ const page = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {schools.map((school) => <SchoolCard key={school.id} school={school} />)}
+          {schools.map((school,i) => <SchoolCard key={i} school={school} />)}
         </div>
       )}
     </div>
@@ -47,7 +47,7 @@ const SchoolCard = ({ school }) => {
     <div className="bg-white p-4 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 delay-150">
       <div className="mb-4 relative overflow-hidden">
         <img
-          src={`images/${school.image}`}
+          src={`https://storage.cloud.google.com/edunify/${school.image}`}
           alt={school.name}
           className="w-full h-32 object-cover rounded-md transform scale-100 hover:scale-110 transition-transform delay-150"
         />

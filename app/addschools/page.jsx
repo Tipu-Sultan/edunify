@@ -13,6 +13,7 @@ const page = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
+    formData.append("file", data.file[0]);
     formData.append("name", data.name);
     formData.append("address", data.address);
     formData.append("city", data.city);
@@ -25,21 +26,21 @@ const page = () => {
         method: "POST",
         body: formData,
       });
-
+    
       if (response.ok) {
         const result = await response.json();
         console.log("Data submitted successfully:", result.data);
         toast.success(result.data.message);
-        setLoading(false);
       } else {
         console.error("Failed to submit data:", response.statusText);
         toast.error("Failed to submit data");
-        setLoading(false);
       }
     } catch (error) {
       console.error("Error submitting data:", error);
-      setLoading(false);
+    } finally {
+      setLoading(false); // This code will run regardless of success or failure
     }
+    
   };
 
   return (
@@ -205,7 +206,34 @@ const page = () => {
           </div>
 
           {/* Image Upload (File Input) */}
-
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Add School Image
+            </label>
+            <input
+              type="file"
+              {...register("file", {
+                required: "Image is required",
+                validate: {
+                  validFileType: (value) => {
+                    const allowedFileTypes = [".jpg", ".jpeg", ".png"];
+                    const fileExtension = value[0].name
+                      .split(".")
+                      .pop()
+                      .toLowerCase();
+                    return allowedFileTypes.includes(`.${fileExtension}`);
+                  },
+                },
+              })}
+              accept=".jpg, .jpeg, .png"
+            />
+            {errors.file && (
+              <p className="text-red-500 mt-1">{errors.picture.message}</p>
+            )}
+          </div>
           {/* Submit Button */}
           <div className="text-center">
             <button
