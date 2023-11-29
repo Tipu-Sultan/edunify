@@ -3,9 +3,13 @@ import multer from 'multer';
 import { Storage } from '@google-cloud/storage';
 import { connectDB } from '../../utils/db';
 import {School} from '../../models/school';
+const path = require('path');
+
+const keyFilePath = path.join(__dirname, 'public', 'edunifyKey.json');
+
 const storage = new Storage({
   projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
-  keyFilename: process.env.PROJECT_KEY_FILE_PATH,
+  keyFilename: keyFilePath,
 });
 
 const bucket = storage.bucket('edunify');
