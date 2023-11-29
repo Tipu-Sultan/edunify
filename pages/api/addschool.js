@@ -16,7 +16,7 @@ const storage = new Storage({
     tokenUri: process.env.GOOGLE_CLOUD_TOKEN_URI,
     authProviderX509CertUrl: process.env.GOOGLE_CLOUD_AUTH_PROVIDER_X509_CERT_URL,
     clientX509CertUrl: process.env.GOOGLE_CLOUD_CLIENT_X509_CERT_URL,
-    universeDomain: process.env.GOOGLE_CLOUD_UNIVERSE_DOMAIN,
+    universeDomain: process.env.GOOGLE_CLOUD_UNIVERSE_DOMAIN
   },
 });
 
