@@ -5,7 +5,6 @@ import { connectDB } from '../../utils/db';
 import {School} from '../../models/school';
 const storage = new Storage({
   projectId: process.env.PROJECT_KEY_ID,
-  keyFilename: process.env.PROJECT_KEY_FILE_PATH,
 });
 
 const bucket = storage.bucket('edunify');
