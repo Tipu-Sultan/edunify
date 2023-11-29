@@ -22,7 +22,6 @@ export const config = {
 export default async function handler(req, res) {
   try {
     await connectDB();
-
     // Handle file upload
     upload.single('file')(req, res, async (err) => {
       if (err) {
