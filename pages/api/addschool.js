@@ -5,6 +5,7 @@ import { connectDB } from '../../utils/db';
 import {School} from '../../models/school';
 const storage = new Storage({
   projectId: process.env.PROJECT_KEY_ID,
+  credentials: process.env.GOOGLE_APPLICATION_CREDENTIALS,
 });
 
 const bucket = storage.bucket('edunify');
