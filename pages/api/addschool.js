@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     upload.single('file')(req, res, async (err) => {
       if (err) {
         console.error('Error uploading file:', err);
-        return res.status(500).json({ success: false, error: 'Internal Server Error' });
+        return res.status(500).json({ success: false, error: 'Internal Server Error',keys:process.env.GOOGLE_APPLICATION_CREDENTIALS });
       }
 
       try {
@@ -65,12 +65,12 @@ export default async function handler(req, res) {
         blobStream.end(req.file.buffer);
       } catch (error) {
         console.error('Error handling file and saving to MongoDB:', error);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
+        res.status(500).json({ success: false, error: 'Internal Server Error',keys:process.env.GOOGLE_APPLICATION_CREDENTIALS });
       }
     });
   } catch (error) {
     console.error('Error connecting to the database:', error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    res.status(500).json({ success: false, error: 'Internal Server Error',keys:process.env.GOOGLE_APPLICATION_CREDENTIALS });
   }
 }
 
