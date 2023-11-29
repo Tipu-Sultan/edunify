@@ -9,7 +9,7 @@ const page = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('https://mancode.onrender.com/api/getschool'); 
+        const response = await axios.get('https://mancode.onrender.com/api/getschool');
         if (response.status === 200) {
           setSchools(response.data);
         } else {
@@ -26,7 +26,7 @@ const page = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center">
+    <>
       {loading ? (
         <div className="flex items-center justify-center h-screen">
           <div className="relative">
@@ -36,23 +36,25 @@ const page = () => {
             </p>
           </div>
         </div>
+      ) : schools.length > 0 ? (
+        <div className="flex items-center justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {schools.map((school, i) => (
+              <SchoolCard key={i} school={school} />
+            ))}
+          </div>
+        </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {schools.length > 0 ? (
-            schools.map((school, i) => <SchoolCard key={i} school={school} />)
-          ) : (
-            <div className="flex items-center justify-center h-screen">
-              <p className="text-red-500 font-bold text-center">
-                Oops! Schools are not available at the moment.
-              </p>
-            </div>
-          )}
+        <div className="flex items-center justify-center h-screen">
+          <p className="text-red-500 font-bold text-center">
+            Oops! Schools are not available at the moment.
+          </p>
         </div>
       )}
-    </div>
+    </>
   );
-  
-  
+
+
 };
 
 const SchoolCard = ({ school }) => {
