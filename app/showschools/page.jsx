@@ -28,9 +28,12 @@ const page = () => {
   return (
     <div className="flex items-center justify-center">
       {loading ? (
-        <div className='flex items-center justify-center h-screen'>
-          <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-indigo-500 mx-auto">
-            <p className="text-gray-600 mt-4">Please wait a couple of minutes.</p>
+        <div className="flex items-center justify-center h-screen">
+          <div className="relative">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-indigo-500 mx-auto"></div>
+            <p className="text-gray-600 absolute bottom-0 mb-4 w-full text-center font-bold">
+              Please wait a couple of minutes.
+            </p>
           </div>
         </div>
       ) : (
@@ -38,7 +41,11 @@ const page = () => {
           {schools.length > 0 ? (
             schools.map((school, i) => <SchoolCard key={i} school={school} />)
           ) : (
-            <p className="text-red-500">Oops! Schools are not available at the moment.</p>
+            <div className="flex items-center justify-center h-screen">
+              <p className="text-red-500 font-bold text-center">
+                Oops! Schools are not available at the moment.
+              </p>
+            </div>
           )}
         </div>
       )}
