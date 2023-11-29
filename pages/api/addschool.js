@@ -2,7 +2,7 @@
 import multer from 'multer';
 import { Storage } from '@google-cloud/storage';
 import { connectDB } from '../../utils/db';
-import School from '../../models/school';
+import {School} from '../../models/school';
 const storage = new Storage({
   projectId: process.env.PROJECT_KEY_ID,
   keyFilename: process.env.PROJECT_KEY_FILE_PATH,
