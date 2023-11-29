@@ -32,41 +32,39 @@ const page = () => {
     formData.append("contact", data.contact);
     formData.append("email", data.email);
     setLoading(true);
-  
+
     try {
-<<<<<<< HEAD
       const response = await fetch("/api/addschool", {
         method: "POST",
         body: formData,
       });
-    
+
       if (response.ok) {
         const result = await response.json();
-=======
-      const response = await axios.post("https://mancode.onrender.com/api/addschool", formData);
-  
-      if (response.status === 201) {
-        const result = response.data;
->>>>>>> 13d5c3f64770a5b82918b6f861754cca3711296e
-        console.log("Data submitted successfully:", result.data);
-        toast.success(result.data.message);
-      } else {
-        console.error("Failed to submit data:", response.statusText);
-        toast.error("Failed to submit data");
+
+        const response = await axios.post("https://mancode.onrender.com/api/addschool", formData);
+
+        if (response.status === 201) {
+          const result = response.data;
+          console.log("Data submitted successfully:", result.data);
+          toast.success(result.data.message);
+        } else {
+          console.error("Failed to submit data:", response.statusText);
+          toast.error("Failed to submit data");
+        }
       }
     } catch (error) {
       console.error("Error submitting data:", error);
-<<<<<<< HEAD
+
     } finally {
       setLoading(false); // This code will run regardless of success or failure
-=======
+
       toast.error("Error submitting data");
       setLoading(false);
->>>>>>> 13d5c3f64770a5b82918b6f861754cca3711296e
     }
-    
+
   };
-  
+
 
   return (
     <div className="min-h-md flex items-center justify-center bg-gray-50">
@@ -87,11 +85,10 @@ const page = () => {
               type="text"
               id="name"
               name="name"
-              className={`mt-1 p-2 w-full border rounded-md ${
-                errors.name
+              className={`mt-1 p-2 w-full border rounded-md ${errors.name
                   ? "border-red-500"
                   : "border-gray-300 focus:border-indigo-500"
-              }`}
+                }`}
               {...register("name", { required: true })}
             />
             {errors.name && (
@@ -111,11 +108,10 @@ const page = () => {
               type="text"
               id="address"
               name="address"
-              className={`mt-1 p-2 w-full border rounded-md ${
-                errors.address
+              className={`mt-1 p-2 w-full border rounded-md ${errors.address
                   ? "border-red-500"
                   : "border-gray-300 focus:border-indigo-500"
-              }`}
+                }`}
               {...register("address", { required: true })}
             />
             {errors.address && (
@@ -135,11 +131,10 @@ const page = () => {
               type="text"
               id="city"
               name="city"
-              className={`mt-1 p-2 w-full border rounded-md ${
-                errors.city
+              className={`mt-1 p-2 w-full border rounded-md ${errors.city
                   ? "border-red-500"
                   : "border-gray-300 focus:border-indigo-500"
-              }`}
+                }`}
               {...register("city", { required: true })}
             />
             {errors.city && (
@@ -159,11 +154,10 @@ const page = () => {
               type="text"
               id="state"
               name="state"
-              className={`mt-1 p-2 w-full border rounded-md ${
-                errors.state
+              className={`mt-1 p-2 w-full border rounded-md ${errors.state
                   ? "border-red-500"
                   : "border-gray-300 focus:border-indigo-500"
-              }`}
+                }`}
               {...register("state", { required: true })}
             />
             {errors.state && (
@@ -183,11 +177,10 @@ const page = () => {
               type="text"
               id="contact"
               name="contact"
-              className={`mt-1 p-2 w-full border rounded-md ${
-                errors.contact
+              className={`mt-1 p-2 w-full border rounded-md ${errors.contact
                   ? "border-red-500"
                   : "border-gray-300 focus:border-indigo-500"
-              }`}
+                }`}
               {...register("contact", {
                 pattern: {
                   value: /^[0-9]{10}$/,
@@ -213,11 +206,10 @@ const page = () => {
               type="text"
               id="email"
               name="email"
-              className={`mt-1 p-2 w-full border rounded-md ${
-                errors.email
+              className={`mt-1 p-2 w-full border rounded-md ${errors.email
                   ? "border-red-500"
                   : "border-gray-300 focus:border-indigo-500"
-              }`}
+                }`}
               {...register("email", {
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
@@ -233,11 +225,7 @@ const page = () => {
           {/* Image Upload (File Input) */}
           <div className="mb-4">
             <label
-<<<<<<< HEAD
-              htmlFor="email"
-=======
               htmlFor="file"
->>>>>>> 13d5c3f64770a5b82918b6f861754cca3711296e
               className="block text-sm font-medium text-gray-600"
             >
               Add School Image
@@ -260,11 +248,7 @@ const page = () => {
               accept=".jpg, .jpeg, .png"
             />
             {errors.file && (
-<<<<<<< HEAD
-              <p className="text-red-500 mt-1">{errors.picture.message}</p>
-=======
               <p className="text-red-500 mt-1">{errors.file.message}</p>
->>>>>>> 13d5c3f64770a5b82918b6f861754cca3711296e
             )}
           </div>
           {/* Submit Button */}
