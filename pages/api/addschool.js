@@ -2,8 +2,7 @@
 import multer from 'multer';
 import { Storage } from '@google-cloud/storage';
 import { connectDB } from '../../utils/db';
-import { School } from '../../models/school';
-
+import {School} from '../../models/school';
 const storage = new Storage({
   projectId: process.env.PROJECT_KEY_ID,
 });
@@ -43,7 +42,7 @@ export default async function handler(req, res) {
           contact: req.body.contact,
           email: req.body.email,
           image: req.file.originalname,
-          url: '',
+          url:''
         });
 
         const savedSchool = await school.save();
@@ -56,23 +55,11 @@ export default async function handler(req, res) {
           res.status(500).json({ success: false, error: 'Internal Server Error' });
         });
 
-        blobStream.on('finish', async () => {
-          // File is successfully uploaded, save to MongoDB
-          try {
-            // Additional logic if needed before saving to MongoDB
-            // ...
-
-            // Save to MongoDB
-            await savedSchool.save();
-
-            res.status(201).json({
-              success: true,
-              data: { id: savedSchool._id, ...req.body, picture: req.file.originalname, message: 'School added successfully' },
-            });
-          } catch (mongoErr) {
-            console.error('Error saving to MongoDB:', mongoErr);
-            res.status(500).json({ success: false, error: 'Internal Server Error' });
-          }
+        blobStream.on('finish', () => {
+          res.status(201).json({
+            success: true,
+            data: { id: savedSchool._id, ...req.body, picture: req.file.originalname, message: 'School added successfully' },
+          });
         });
 
         blobStream.end(req.file.buffer);
@@ -86,7 +73,6 @@ export default async function handler(req, res) {
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 }
-
 
 
 
