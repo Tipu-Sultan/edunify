@@ -3,13 +3,21 @@ import multer from 'multer';
 import { Storage } from '@google-cloud/storage';
 import { connectDB } from '../../utils/db';
 import {School} from '../../models/school';
-const path = require('path');
-
-const KeyFilePath = path.join(__dirname, 'public', 'edunifyKey.json');
-
 const storage = new Storage({
-  projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
-  keyFilename: KeyFilePath,
+  projectId: process.env.PROJECT_KEY_ID,
+  credentials: {
+    "type": process.env.GOOGLE_CLOUD_TYPE,
+    "project_id": process.env.GOOGLE_CLOUD_PROJECT_ID,
+    "private_key_id": process.env.GOOGLE_CLOUD_PRIVATE_KEY_ID,
+    "private_key": process.env.GOOGLE_CLOUD_PRIVATE_KEY,
+    "client_email": process.env.GOOGLE_CLOUD_CLIENT_EMAIL,
+    "client_id": process.env.GOOGLE_CLOUD_CLIENT_ID,
+    "auth_uri": process.env.GOOGLE_CLOUD_AUTH_URI,
+    "token_uri": process.env.GOOGLE_CLOUD_TOKEN_URI,
+    "auth_provider_x509_cert_url": process.env.GOOGLE_CLOUD_AUTH_PROVIDER_X509_CERT_URL,
+    "client_x509_cert_url": process.env.GOOGLE_CLOUD_CLIENT_X509_CERT_URL,
+    "universe_domain": process.env.GOOGLE_CLOUD_UNIVERSE_DOMAIN,
+  }
 });
 
 const bucket = storage.bucket('edunify');
@@ -31,7 +39,7 @@ export default async function handler(req, res) {
     upload.single('file')(req, res, async (err) => {
       if (err) {
         console.error('Error uploading file:', err);
-        return res.status(500).json({ success: false, error: 'Internal Server Error'});
+        return res.status(500).json({ success: false, error: 'Internal Server Error' });
       }
 
       try {
@@ -47,6 +55,7 @@ export default async function handler(req, res) {
           contact: req.body.contact,
           email: req.body.email,
           image: req.file.originalname,
+          url:''
         });
 
         const savedSchool = await school.save();
