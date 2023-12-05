@@ -2,6 +2,19 @@
 import Link from "next/link";
 import React, { useState } from "react";
 
+const MobileNavModal = ({ isOpen, onClose }) => {
+  return (
+    <div className={`fixed inset-0 bg-black bg-opacity-50 ${isOpen ? 'block' : 'hidden'}`} onClick={onClose}>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4">
+        <Link href="/">Home</Link>
+        <Link href="/addschools">Add Schools</Link>
+        <Link href="/showschools">Show Schools</Link>
+        <button onClick={onClose}>Close</button>
+      </div>
+    </div>
+  );
+};
+
 const Header = () => {
   const [isNavOpen, setNavOpen] = useState(false);
 
@@ -9,13 +22,16 @@ const Header = () => {
     setNavOpen(!isNavOpen);
   };
 
+  const closeNav = () => {
+    setNavOpen(false);
+  };
+
   return (
     <div>
       <header>
         <nav
-          className={`relative flex w-full items-center justify-between bg-gradient-to-r from-blue-500 to-purple-500 py-2 text-white shadow-lg hover:text-neutral-100 focus:text-neutral-100 dark:bg-neutral-600 dark:text-neutral-200 md:flex-wrap md:justify-start ${
-            isNavOpen ? "lg:h-auto" : ""
-          }`}
+          className={`relative flex w-full items-center justify-between bg-gradient-to-r from-blue-500 to-purple-500 py-2 text-white shadow-lg hover:text-neutral-100 focus:text-neutral-100 dark:bg-neutral-600 dark:text-neutral-200 md:flex-wrap md:justify-start ${isNavOpen ? "lg:h-auto" : ""
+            }`}
           data-te-navbar-ref
         >
           <div className="flex w-full flex-wrap items-center justify-between px-3">
@@ -44,11 +60,9 @@ const Header = () => {
                 </span>
               </button>
             </div>
-
             <div
-              className={`${
-                isNavOpen ? "block" : "hidden"
-              } lg:flex lg:visible flex-grow items-center`}
+              className={`${isNavOpen ? "block" : "hidden"
+                } lg:flex lg:visible flex-grow items-center`}
               id="navbarSupportedContentX"
               data-te-collapse-item
             >
@@ -90,9 +104,11 @@ const Header = () => {
             </div>
           </div>
         </nav>
+        <MobileNavModal isOpen={isNavOpen} onClose={closeNav} />
       </header>
     </div>
   );
 };
 
 export default Header;
+
