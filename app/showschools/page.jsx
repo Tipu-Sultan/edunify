@@ -9,7 +9,7 @@ const page = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('/api/getschool'); 
+        const response = await axios.get('/api/getschool');
         if (response.status === 200) {
           setSchools(response.data);
         } else {
@@ -26,20 +26,36 @@ const page = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center">
+    <>
       {loading ? (
-        <div className='flex items-center justify-center h-screen'>
-          <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-indigo-500 mx-auto"></div>
+        <div className="flex items-center justify-center h-screen">
+          <div className="relative">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-indigo-500 mx-auto"></div>
+            <p className="text-gray-600 absolute bottom-0 mb-4 w-full text-center font-bold">
+              Please wait a couple of minutes.
+            </p>
+          </div>
+        </div>
+      ) : schools.length > 0 ? (
+        <div className="flex items-center justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {schools.map((school, i) => (
+              <SchoolCard key={i} school={school} />
+            ))}
+          </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {schools.map((school,i) => <SchoolCard key={i} school={school} />)}
+        <div className="flex items-center justify-center h-screen">
+          <p className="text-red-500 font-bold text-center">
+            Oops! Schools are not available at the moment.
+          </p>
         </div>
       )}
-    </div>
+    </>
+
   );
-  
-  
+
+
 };
 
 const SchoolCard = ({ school }) => {
@@ -47,7 +63,7 @@ const SchoolCard = ({ school }) => {
     <div className="bg-white p-4 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 delay-150">
       <div className="mb-4 relative overflow-hidden">
         <img
-          src={`https://storage.cloud.google.com/edunify/${school.image}`}
+          src={`${school.publicUrl}`}
           alt={school.name}
           className="w-full h-32 object-cover rounded-md transform scale-100 hover:scale-110 transition-transform delay-150"
         />

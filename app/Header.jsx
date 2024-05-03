@@ -2,20 +2,21 @@
 import Link from "next/link";
 import React, { useState } from "react";
 
-const Header = () => {
+const Header = ({setSearchQuery,searchQuery}) => {
   const [isNavOpen, setNavOpen] = useState(false);
+
 
   const toggleNav = () => {
     setNavOpen(!isNavOpen);
   };
+  
 
   return (
     <div>
       <header>
         <nav
-          className={`relative flex w-full items-center justify-between bg-gradient-to-r from-blue-500 to-purple-500 py-2 text-white shadow-lg hover:text-neutral-100 focus:text-neutral-100 dark:bg-neutral-600 dark:text-neutral-200 md:flex-wrap md:justify-start ${
-            isNavOpen ? "lg:h-auto" : ""
-          }`}
+          className={`relative flex w-full items-center justify-between bg-gradient-to-r from-blue-500 to-purple-500 py-2 text-white shadow-lg hover:text-neutral-100 focus:text-neutral-100 dark:bg-neutral-600 dark:text-neutral-200 md:flex-wrap md:justify-start ${isNavOpen ? "lg:h-auto" : ""
+            }`}
           data-te-navbar-ref
         >
           <div className="flex w-full flex-wrap items-center justify-between px-3">
@@ -46,9 +47,8 @@ const Header = () => {
             </div>
 
             <div
-              className={`${
-                isNavOpen ? "block" : "hidden"
-              } lg:flex lg:visible flex-grow items-center`}
+              className={`${isNavOpen ? "block" : "hidden"
+                } lg:flex lg:visible flex-grow items-center`}
               id="navbarSupportedContentX"
               data-te-collapse-item
             >
@@ -87,6 +87,36 @@ const Header = () => {
                   </Link>
                 </li>
               </ul>
+            </div>
+
+            <div className="flex items-center ml-auto">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="border p-1 rounded bg-transparent text-white  placeholder-white"
+                />
+                <button
+                  className="ml-2 bg-transparent border-none text-white cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-5.2-5.2"
+                    />
+                    <circle cx="10" cy="10" r="8" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </nav>
