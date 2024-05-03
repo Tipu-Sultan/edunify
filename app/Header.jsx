@@ -126,3 +126,4 @@ const Header = ({setSearchQuery,searchQuery}) => {
 };
 
 export default Header;
+

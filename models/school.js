@@ -30,6 +30,7 @@ import mongoose from "mongoose";
             required: true,
             default:'a',
           },
+
           publicUrl: {
             type: String, 
             required: true,
@@ -40,6 +41,7 @@ import mongoose from "mongoose";
             required: true,
             default:'p',
           },
+
     });
   
   mongoose.models = {};

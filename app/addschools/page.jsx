@@ -1,4 +1,5 @@
 "use client";
+//
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -38,7 +39,7 @@ const page = () => {
         method: "POST",
         body: formData,
       });
-  
+
       // Log the response to check its contents
       console.log("Response:", response);
   
@@ -47,12 +48,13 @@ const page = () => {
     } catch (error) {
       console.error("Error submitting data:", error);
       toast.success("School submitted successfully");
+
     } finally {
       setLoading(false);
     }
   };
   
-  
+
 
 
   return (
