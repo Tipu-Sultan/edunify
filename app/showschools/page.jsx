@@ -1,10 +1,14 @@
 'use client'
+
 // pages/schools.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-const page = () => {
+import SearchPanel from '../../components/SearchPanel';
+
+const Page = () => {
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchSchools = async () => {
@@ -25,8 +29,16 @@ const page = () => {
     fetchSchools();
   }, []);
 
+  const filteredSchools = schools.filter(school =>
+    school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    school.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    school.address.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+
   return (
     <>
+      <SearchPanel searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       {loading ? (
         <div className="flex items-center justify-center h-screen">
           <div className="relative">
@@ -36,10 +48,10 @@ const page = () => {
             </p>
           </div>
         </div>
-      ) : schools.length > 0 ? (
+      ) : filteredSchools.length > 0 ? (
         <div className="flex items-center justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {schools.map((school, i) => (
+            {filteredSchools.map((school, i) => (
               <SchoolCard key={i} school={school} />
             ))}
           </div>
@@ -52,10 +64,7 @@ const page = () => {
         </div>
       )}
     </>
-
   );
-
-
 };
 
 const SchoolCard = ({ school }) => {
@@ -78,7 +87,4 @@ const SchoolCard = ({ school }) => {
   );
 };
 
-
-
-
-export default page;
+export default Page;

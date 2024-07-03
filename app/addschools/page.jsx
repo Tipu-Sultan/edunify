@@ -39,16 +39,17 @@ const page = () => {
         method: "POST",
         body: formData,
       });
-
-      // Log the response to check its contents
-      console.log("Response:", response);
   
       const result = await response.json();
-      toast.success(result.data.message);
+  
+      if (response.ok) {
+        toast.success(result.message);
+      } else {
+        toast.error(result.error || "An unexpected error occurred");
+      }
     } catch (error) {
       console.error("Error submitting data:", error);
-      toast.success("School submitted successfully");
-
+      toast.error("Error submitting data. Please try again.");
     } finally {
       setLoading(false);
     }

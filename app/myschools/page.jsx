@@ -1,14 +1,18 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import SearchPanel from '../../components/SearchPanel';
 const page = () => {
   const [schools, setSchools] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get('/api/allschool');
+        const response = await axios.get('/api/allschools');
         if (response.status === 200) {
           setSchools(response.data);
         } else {
@@ -26,20 +30,37 @@ const page = () => {
 
   const handleDeleteSchool = async (id) => {
     try {
-      const response = await axios.delete(`/api/allschool/${id}`);
+      const response = await axios.delete(`/api/allschools?id=${id}`);
+
       if (response.status === 200) {
-        // If deletion is successful, refresh the school list
-        fetchSchools();
+        // Update schools state by filtering out the deleted school
+        setSchools(schools.filter(school => school._id !== id));
+
+        // Show success toast
+        toast.success('School deleted successfully');
       } else {
         console.error('Failed to delete school:', response.statusText);
+        // Show error toast
+        toast.error('Failed to delete school');
       }
     } catch (error) {
       console.error('Error deleting school:', error.message);
+      // Show error toast
+      toast.error('Error deleting school');
     }
   };
 
+  const filteredSchools = schools.filter(school =>
+    school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    school.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    school.address.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+
   return (
     <>
+      <SearchPanel searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
       {loading ? (
         <div className="flex items-center justify-center h-screen">
           <div className="relative">
@@ -49,10 +70,10 @@ const page = () => {
             </p>
           </div>
         </div>
-      ) : schools.length > 0 ? (
+      ) : filteredSchools.length > 0 ? (
         <div className="flex items-center justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {schools.map((school, i) => (
+            {filteredSchools.map((school, i) => (
               <SchoolCard key={i} school={school} onDelete={() => handleDeleteSchool(school._id)} />
             ))}
           </div>
@@ -70,12 +91,14 @@ const page = () => {
 
 };
 
-const SchoolCard = ({ school,onDelete  }) => {
+const SchoolCard = ({ school, onDelete }) => {
   return (
     <div className="bg-white p-4 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 delay-150">
       <h2 className="text-xl font-bold mb-2">{school.name}</h2>
+      <p className="text-gray-600 mb-2">{school.address}, {school.city},</p>
+      <p className="text-gray-600 mb-2">State: {school.state}</p>
       <button onClick={onDelete} className="bg-indigo-500 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300">
-        Apply Now
+        Delete Now
       </button>
     </div>
   );
