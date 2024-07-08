@@ -25,8 +25,18 @@
 
 import mongoose from "mongoose";
 
-export const connectDB = async () => {
-  const { connection } = await mongoose.connect(process.env.MONGO_URI, {
-    dbName: "Todo13",
-  });
+const connectDB = async () => {
+  try {
+    const { connection } = await mongoose.connect(process.env.MONGO_URI, {
+      dbName: "edunify",
+    });
+
+    console.log(`MongoDB connected: ${connection.host}`);
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    process.exit(1); // Exit the process with failure
+  }
 };
+
+export default connectDB;
+

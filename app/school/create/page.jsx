@@ -33,15 +33,19 @@ const page = () => {
     formData.append("contact", data.contact);
     formData.append("email", data.email);
     setLoading(true);
-  
+
     try {
-      const response = await fetch("/api/addschool", {
+      const token = localStorage.getItem('token');
+      const response = await fetch("/api/school/addschool", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
-  
+
       const result = await response.json();
-  
+
       if (response.ok) {
         toast.success(result.message);
       } else {
@@ -54,7 +58,8 @@ const page = () => {
       setLoading(false);
     }
   };
-  
+
+
 
 
 
@@ -78,8 +83,8 @@ const page = () => {
               id="name"
               name="name"
               className={`mt-1 p-2 w-full border rounded-md ${errors.name
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-indigo-500"
+                ? "border-red-500"
+                : "border-gray-300 focus:border-indigo-500"
                 }`}
               {...register("name", { required: true })}
             />
@@ -101,8 +106,8 @@ const page = () => {
               id="address"
               name="address"
               className={`mt-1 p-2 w-full border rounded-md ${errors.address
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-indigo-500"
+                ? "border-red-500"
+                : "border-gray-300 focus:border-indigo-500"
                 }`}
               {...register("address", { required: true })}
             />
@@ -124,8 +129,8 @@ const page = () => {
               id="city"
               name="city"
               className={`mt-1 p-2 w-full border rounded-md ${errors.city
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-indigo-500"
+                ? "border-red-500"
+                : "border-gray-300 focus:border-indigo-500"
                 }`}
               {...register("city", { required: true })}
             />
@@ -147,8 +152,8 @@ const page = () => {
               id="state"
               name="state"
               className={`mt-1 p-2 w-full border rounded-md ${errors.state
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-indigo-500"
+                ? "border-red-500"
+                : "border-gray-300 focus:border-indigo-500"
                 }`}
               {...register("state", { required: true })}
             />
@@ -170,8 +175,8 @@ const page = () => {
               id="contact"
               name="contact"
               className={`mt-1 p-2 w-full border rounded-md ${errors.contact
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-indigo-500"
+                ? "border-red-500"
+                : "border-gray-300 focus:border-indigo-500"
                 }`}
               {...register("contact", {
                 pattern: {
@@ -199,8 +204,8 @@ const page = () => {
               id="email"
               name="email"
               className={`mt-1 p-2 w-full border rounded-md ${errors.email
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-indigo-500"
+                ? "border-red-500"
+                : "border-gray-300 focus:border-indigo-500"
                 }`}
               {...register("email", {
                 pattern: {
@@ -246,10 +251,22 @@ const page = () => {
           {/* Submit Button */}
           <div className="text-center">
             <button
+            disabled={loading}
               type="submit"
               className="bg-indigo-500 text-white py-2 px-4 rounded-full font-bold hover:bg-indigo-600 focus:outline-none focus:ring focus:border-indigo-300"
             >
-              {loading && loading ? "Please wait" : "Add School"}
+              {loading ? (
+                <svg className="animate-spin h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647zM20 12c0-3.042-1.135-5.824-3-7.938l-3 2.647A7.962 7.962 0 0116 12h4zm-6 7.938V19h-4v1.938A7.962 7.962 0 0112 20h4zM7 4.062L4 6.709V9h4V4.062H7z"
+                  ></path>
+                </svg>
+              ) : (
+                'Add School'
+              )}
             </button>
           </div>
         </form>

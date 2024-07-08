@@ -1,7 +1,8 @@
-// pages/api/addschool.js
+// pages/api/school/addschool.js
 
-import { connectDB } from '../../utils/db';
-import { School } from '../../models/school';
+import connectDB from '../../../utils/db';
+import authMiddleware from '../../../utils/authMiddleware';
+import { School } from '../../../models/schoolsModel';
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 
@@ -29,7 +30,8 @@ export const config = {
   },
 };
 
-export default async function handler(req, res) {
+// Handler function for your API route
+const handler = async (req, res) => {
   try {
     await connectDB();
 
@@ -59,7 +61,8 @@ export default async function handler(req, res) {
             contact: req.body.contact,
             email: req.body.email,
             image: req.file.originalname,
-            publicUrl: result.secure_url
+            publicUrl: result.secure_url,
+            postedBy: req.user._id 
           });
 
           const savedSchool = await school.save();
@@ -81,4 +84,6 @@ export default async function handler(req, res) {
     console.error('Error connecting to the database:', error);
     return res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
-}
+};
+
+export default authMiddleware(handler); 
