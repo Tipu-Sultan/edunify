@@ -20,13 +20,15 @@ export default function Example() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token); // Update login state based on token presence
+    setIsLoggedIn(!!token); 
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove token from local storage
-    localStorage.removeItem('userInfo'); // Remove user info from local storage
-    setIsLoggedIn(false); // Update login state
+    localStorage.removeItem('token'); 
+    localStorage.removeItem('userInfo'); 
+    setIsLoggedIn(false); 
+    window.location.href = '/login'
+
   };
 
   return (

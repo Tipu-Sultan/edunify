@@ -5,11 +5,9 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 
 
 export default function LoginPage() {
-  const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [message, setMessage] = useState('');
   const [error, setError] = useState(false);
@@ -26,7 +24,7 @@ export default function LoginPage() {
       localStorage.setItem('userInfo', JSON.stringify(userInfo));
       setMessage('Login successful');
       setError(false);
-      router.push('/');
+      window.location.href = '/'
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
         setMessage(error.response.data.message);
