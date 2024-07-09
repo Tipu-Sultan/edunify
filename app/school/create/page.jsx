@@ -65,8 +65,8 @@ const page = () => {
 
   return (
     <div className="min-h-md flex items-center justify-center bg-gray-50">
-      <div className="bg-white p-8 rounded-lg  max-w-6xl w-full shadow-blue">
-        <h1 className="text-2xl font-bold mb-6 text-center text-indigo-600">
+      <div className="bg-white p-8 rounded-lg  max-w-6xl w-full ">
+        <h1 className="mt-5 text-2xl font-bold mb-6 text-center text-indigo-600">
           Add New School
         </h1>
         <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">

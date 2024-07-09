@@ -41,7 +41,7 @@ const Page = () => {
         <div className="flex items-center justify-center h-screen">
           <div className="relative">
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-indigo-500 mx-auto"></div>
-            <p className="text-gray-600 absolute bottom-0 mb-4 w-full text-center font-bold">
+            <p className="text-indigo-600 absolute bottom-0 mb-4 w-full text-center font-bold">
               Please wait a couple of minutes.
             </p>
           </div>

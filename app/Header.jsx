@@ -4,11 +4,12 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'Add School', href: '/school/create', current: false },
-  { name: 'Your Schools', href: '/school/myschools', current: false },
+const initialNavigation = [
+  { name: 'Home', href: '/', key: 'home' },
+  { name: 'Add School', href: '/school/create', key: 'add-school',adminOnly: true },
+  { name: 'Your Schools', href: '/school/myschools', key: 'your-schools', adminOnly: true },
 ];
 
 function classNames(...classes) {
@@ -17,18 +18,31 @@ function classNames(...classes) {
 
 export default function Example() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [navigation, setNavigation] = useState(initialNavigation);
+  const [currentNav, setCurrentNav] = useState('home');
+  const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token); 
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    setIsLoggedIn(!!token);
+
+    if (userInfo.role === 'admin') {
+      setNavigation(initialNavigation);
+    } else {
+      setNavigation(initialNavigation.filter(item => !item.adminOnly));
+    }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); 
-    localStorage.removeItem('userInfo'); 
-    setIsLoggedIn(false); 
-    window.location.href = '/login'
+    localStorage.removeItem('token');
+    localStorage.removeItem('userInfo');
+    setIsLoggedIn(false);
+    router.push('/login');
+  };
 
+  const handleNavClick = (key) => {
+    setCurrentNav(key);
   };
 
   return (
@@ -58,11 +72,12 @@ export default function Example() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={currentNav === item.key ? 'page' : undefined}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      currentNav === item.key ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                       'rounded-md px-3 py-2 text-sm font-medium'
                     )}
+                    onClick={() => handleNavClick(item.key)}
                   >
                     {item.name}
                   </Link>
@@ -137,11 +152,12 @@ export default function Example() {
               key={item.name}
               as="a"
               href={item.href}
-              aria-current={item.current ? 'page' : undefined}
+              aria-current={currentNav === item.key ? 'page' : undefined}
               className={classNames(
-                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                currentNav === item.key ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                 'block rounded-md px-3 py-2 text-base font-medium'
               )}
+              onClick={() => handleNavClick(item.key)}
             >
               {item.name}
             </DisclosureButton>

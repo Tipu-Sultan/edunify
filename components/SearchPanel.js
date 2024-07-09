@@ -4,7 +4,7 @@ const SearchPanel = ({ searchTerm, setSearchTerm }) => {
   return (
     <div className="flex justify-center items-center my-8">
       <div className="w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-4">Find Your Ideal School</h1>
+        <h1 className="text-3xl font-bold text-center mb-4 text-indigo-600">Find Your Ideal School</h1>
         <div className="relative">
           <input
             type="text"
