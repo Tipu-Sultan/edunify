@@ -56,13 +56,14 @@ export default function ShowSchools() {
                                 key={school?.id}
                                 className="border p-4 rounded-md shadow-md flex flex-col justify-between h-full"
                             >
-                                <div className="mb-4 relative overflow-hidden">
+                                <div className="mb-4 rounded-md  relative overflow-hidden hover:rounded-md" onContextMenu={(e) => e.preventDefault()}>
                                     <Image
                                         src={school?.image || defaultImage}
                                         alt={school?.name}
                                         width={500}
                                         height={200}
-                                        className="w-full h-32 object-cover rounded-md transition-transform duration-300 ease-in-out transform hover:scale-105"
+                                        className="w-full h-32 object-cover rounded-md  transition-transform duration-500 ease-in-out transform hover:scale-125"
+                                        draggable="false"
                                     />
                                 </div>
                                 
