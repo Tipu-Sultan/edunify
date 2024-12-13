@@ -153,7 +153,7 @@ export default function AddSchool() {
                 type="file"
                 className="block  pl-10 text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded-lg file:text-sm file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
               />
-              <p className="text-sm text-red-500 mt-1">Image size must be less than 1MB.</p>
+              <p className="text-sm text-red-500 mt-1">Image size must be less than 500KB.</p>
             </div>
             <p className="text-sm text-red-500 mt-1">{errors.image?.message}</p>
           </div>
