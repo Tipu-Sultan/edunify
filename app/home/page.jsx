@@ -22,7 +22,8 @@ export default function ShowSchools() {
 
     const filteredSchools = schools?.filter(school =>
         school?.name?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-        school?.city?.toLowerCase()?.includes(searchTerm?.toLowerCase())
+        school?.city?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+        school?.address?.toLowerCase()?.includes(searchTerm?.toLowerCase())
     );
 
     if (isLoading) {
