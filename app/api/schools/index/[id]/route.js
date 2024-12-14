@@ -10,7 +10,7 @@ cloudinary.config({
 });
 
 export const GET = async (req, { params }) => {
-    const { id } = await params;
+    const { id } =  params;
     try {
         const schools = await getSchoolsById(id);
         return NextResponse.json(
@@ -32,7 +32,7 @@ export const GET = async (req, { params }) => {
 };
 
 export const DELETE = async (req, { params }) => {
-    const { id } = await params;
+    const { id } =  params;
     try {
         const schools = await getSchoolsById(id);
     // Check if the post has a media URL
