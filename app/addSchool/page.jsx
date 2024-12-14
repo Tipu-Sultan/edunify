@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
-import { Home, MapPin, Phone, Mail, Image as ImageIcon } from "lucide-react";
-import toast, { Toaster } from 'react-hot-toast';
+import { University, MapPin, Phone, Mail, Image as ImageIcon } from "lucide-react";
+import toast from 'react-hot-toast';
 
 
 export default function AddSchool() {
@@ -49,7 +49,6 @@ export default function AddSchool() {
 
   return (
     <div className="max-w-4xl my-5 mx-auto p-6 border shadow-lg rounded-lg bg-white">
-      <Toaster position="top-center" reverseOrder={false} />
 
       <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">
         Add School
@@ -58,7 +57,7 @@ export default function AddSchool() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <div className="relative">
-              <Home className="absolute top-3 left-3 text-gray-400" size={20} />
+              <University className="absolute top-3 left-3 text-gray-400" size={20} />
               <input
                 {...register("name", { required: "School name is required" })}
                 placeholder="School Name"

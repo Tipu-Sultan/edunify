@@ -17,7 +17,13 @@ export const getSchools = async () => {
 };
 
 export const getSchoolsById = async (id) => {
-    const query = "SELECT id, slug, name, address, city, image FROM schools WHERE slug = ?;";
+    const query = "SELECT id, slug, name, address, city, image FROM schools WHERE slug = ?";
+    const [rows] = await db.query(query, [id]); 
+    return rows.length > 0 ? rows[0] : null;
+};
+
+export const deleteSchoolsById = async (id) => {
+    const query = "DELETE FROM schools WHERE slug = ?";
     const [rows] = await db.query(query, [id]); 
     return rows.length > 0 ? rows[0] : null;
 };

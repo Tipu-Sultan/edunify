@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import Link from 'next/link';
-import { Home, MapPin, Map } from 'lucide-react'; // Importing Lucide icons
+import { University, MapPin, Map } from 'lucide-react'; // Importing Lucide icons
 import Image from 'next/image';
 import SearchBar from '@/components/SearchBar';
 import Loader from '@/components/Loader';
@@ -69,7 +69,7 @@ export default function ShowSchools() {
                                 
                                 <div className="flex-grow">
                                     <div className="flex items-center space-x-2 mb-2">
-                                        <Home className="h-5 w-5" />
+                                        <University className="h-5 w-5" />
                                         <h3 className="text-md font-semibold">{school?.name}</h3>
                                     </div>
                                     <div className="flex items-center space-x-2 mb-2">
