@@ -152,8 +152,16 @@ export default function Login() {
             </svg>
             Login with Google
           </Button>
+
+          <div className="mt-4 text-sm text-center text-muted-foreground">
+            <p>Demo Accounts:</p>
+            <p>Super Admin: admin@edunify.com / admin123</p>
+            <p>School Admin: school@dps.com / school123</p>
+            <p>Parent: parent@gmail.com / parent123</p>
+          </div>
         </CardContent>
       </Card>
+      
     </div>
   );
 }
