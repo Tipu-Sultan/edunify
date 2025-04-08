@@ -2,18 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation'; // useRouter for navigation
-import { schools } from '@/lib/data'; // Your school data
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast'; // Assuming useToast is in hooks
 
-export default function ApplyPage() {
-  const { id } = useParams(); // Get the school ID from the URL
+export default function SchoolApply({school}) {
   const router = useRouter(); // For navigation after submission
   const { toast } = useToast();
-  const [school, setSchool] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     parentName: '',
@@ -23,15 +20,7 @@ export default function ApplyPage() {
     grade: '',
   });
 
-  // Fetch school data based on ID
-  useEffect(() => {
-    const foundSchool = schools.find((s) => s.id === parseInt(id));
-    if (foundSchool) {
-      setSchool(foundSchool);
-    } else {
-      console.error('School not found');
-    }
-  }, [id]);
+
 
   // Mock database save (replace with real DB logic)
   const saveToDatabase = async (data) => {

@@ -12,8 +12,8 @@ import ImageSlider from './ImageSlider';
 export default function SchoolDetail({ school }) {
   const router = useRouter(); // Assuming you're using Next.js router
 
-  const handleApply = (schoolId) => {
-    router.push(`/schools/${schoolId}/apply`); // Redirect to the application page
+  const handleApply = (slug) => {
+    router.push(`/schools/${slug}/apply`); // Redirect to the application page
   }
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -159,7 +159,7 @@ export default function SchoolDetail({ school }) {
                 </div>
                 <Button
                   className="w-full"
-                  onClick={() => handleApply(school.id)}
+                  onClick={() => handleApply(school.slug)}
                 >
                   Apply Now
                 </Button>

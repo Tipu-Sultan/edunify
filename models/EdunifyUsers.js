@@ -51,5 +51,5 @@ EdunifyUsersSchema.pre('save', function (next) {
   next();
 });
 
-const EdunifyUsers =  mongoose.models.EdunifyUser || mongoose.model('EdunifyUser', EdunifyUsersSchema);
+const EdunifyUsers =  mongoose.models.EdunifyUsers || mongoose.model('EdunifyUsers', EdunifyUsersSchema);
 export default EdunifyUsers

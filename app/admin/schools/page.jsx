@@ -1,70 +1,99 @@
-'use client';
+// app/admin/schools/page.jsx
+"use client";
 
-import { schools } from '@/lib/data';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useState } from 'react';
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import SchoolList from "@/components/admin/schools/SchoolList";
+import SchoolEditModal from "@/components/admin/schools/SchoolEditModal";
+
 
 export default function SchoolsManagement() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [schools, setSchools] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSchool, setSelectedSchool] = useState(null);
 
-  const filteredSchools = schools.filter(school =>
-    school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    school.location.city.toLowerCase().includes(searchTerm.toLowerCase())
+  useEffect(() => {
+    if (status === "authenticated") {
+      if (session.user.userType !== "SCHOOLADMIN") {
+        router.push("/unauthorized");
+        return;
+      }
+
+      fetch(`/api/admin/schools?createdBy=${session.user.id}`)
+        .then((res) => res.json())
+        .then((data) => setSchools(data))
+        .catch((err) => console.error("Error fetching schools:", err));
+    }
+  }, [status, session, router]);
+
+  const filteredSchools = schools?.filter(
+    (school) =>
+      school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      school.address.city.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  return (
-    <div className="p-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Schools Management</h1>
-        <div className="flex gap-4">
-          <Input
-            placeholder="Search schools..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-64"
-          />
-          <Button>Add New School</Button>
-        </div>
-      </div>
+  const handleEdit = (school) => setSelectedSchool(school);
+  const handleCloseModal = () => setSelectedSchool(null);
 
-      <div className="grid gap-6">
-        {filteredSchools.map((school) => (
-          <Card key={school.id}>
-            <CardHeader>
-              <CardTitle className="flex justify-between items-center">
-                <span>{school.name}</span>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm">Edit</Button>
-                  <Button variant="destructive" size="sm">Delete</Button>
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div>
-                  <Label>Board</Label>
-                  <p>{school.board}</p>
-                </div>
-                <div>
-                  <Label>Fee</Label>
-                  <p>{school.fee}</p>
-                </div>
-                <div>
-                  <Label>Location</Label>
-                  <p>{school.location.city}, {school.location.state}</p>
-                </div>
-                <div>
-                  <Label>Medium</Label>
-                  <p>{school.medium}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+  const handleSave = async (updatedData) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`/api/admin/schools/${selectedSchool.slug}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedData),
+      });
+      if (response.ok) {
+        const updatedSchool = await response.json();
+        setSchools(
+          schools.map((s) => (s.slug === updatedSchool.slug ? updatedSchool : s))
+        );
+      setIsLoading(false);
+        
+      } else {
+      setIsLoading(false);
+        console.error("Failed to update school");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.error("Error saving school:", error);
+    }
+  };
+
+  const handleDelete = async (slug) => {
+    if (confirm("Are you sure you want to delete this school?")) {
+      try {
+        await fetch(`/api/admin/schools/${slug}`, { method: "DELETE" });
+        setSchools(schools.filter((s) => s.slug !== slug));
+      } catch (error) {
+        console.error("Error deleting school:", error);
+      }
+    }
+  };
+
+  if (status === "loading") return <p>Loading...</p>;
+
+  return (
+    <div className="p-4 sm:p-6 md:p-8">
+      <SchoolList
+        schools={filteredSchools}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
+      {selectedSchool && (
+        <SchoolEditModal
+        isLoading={isLoading}
+          school={selectedSchool}
+          onSave={handleSave}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 }

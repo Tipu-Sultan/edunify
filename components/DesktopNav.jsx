@@ -58,7 +58,7 @@ export default function DesktopNav() {
             <ThemeSwitcher />
             {isLoggedIn ? (
               <div className="flex items-center space-x-4">
-                {session?.user?.userType === "SUPERADMIN" && (
+                {session?.user?.userType === "SCHOOLADMIN" && (
                   <Link href="/admin">
                     <Button
                       variant="outline"

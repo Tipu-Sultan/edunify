@@ -1,9 +1,10 @@
 import { Suspense } from 'react';
-import { schools } from '@/lib/data';
 import SkeletonCard from '@/components/schools/SkeletonCard';
 import SchoolList from '@/components/schools/SchoolList';
+import {getSchools} from '@/lib/client/schools';
 
-export default function Schools() {
+export default async function Schools() {
+  const schoolsData = await getSchools();
   return (
     <div>
       <Suspense
@@ -15,7 +16,7 @@ export default function Schools() {
           </div>
         }
       >
-        <SchoolList schools={schools} />
+        <SchoolList schools={schoolsData} />
       </Suspense>
     </div>
   );
