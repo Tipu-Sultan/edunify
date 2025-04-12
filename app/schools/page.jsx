@@ -16,7 +16,11 @@ export default async function Schools() {
           </div>
         }
       >
-        <SchoolList schools={schoolsData} />
+        {schoolsData.length > 0 ? (
+          <SchoolList schools={schoolsData} />
+        ) : (
+          <p>No schools available at the moment.</p>
+        )}
       </Suspense>
     </div>
   );
